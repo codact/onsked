@@ -9,12 +9,7 @@
 
 name: Publish Docker image
 
-on:
-  workflow_run:
-    workflows: ["Push to Docker Registery"]
-    branches: [ main ]
-    types:
-      - completed
+on: [push]
 
 jobs:
   push_to_registry:
