@@ -1,0 +1,78 @@
+on: [push]
+
+# Environment variables available to all jobs and steps in this workflow
+env:
+  REGISTRY_NAME: aks-rg1
+  CLUSTER_NAME: aks-demo1
+  CLUSTER_RESOURCE_GROUP: aks-rg1
+  NAMESPACE: default
+  DOCKER_REGISTRY: hub.docker.com/repository/docker/sreejithk19
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: dev
+    steps:
+    - uses: actions/checkout@master
+	
+	- name: Set up JDK 14
+        uses: actions/setup-java@v1
+        with:
+          java-version: 14
+	
+	# Connect to Docker Container registry
+    - uses: azure/docker-login@v1
+      with:
+        login-server: ${{ env.DOCKER_REGISTRY}}
+        username: ${{ secrets.REGISTRY_USERNAME }} 
+        password: ${{ secrets.REGISTRY_PASSWORD }}
+		
+	### --------- Maven BUILD ---------- ###
+    - name: Build with Maven
+        run: ./mvn build
+    
+	- name: Update Version and Build Name
+        run: |
+          echo "APPLICATION_VERSION=$APPLICATION_VERSION" >> $GITHUB_ENV
+      - name: Build Docker Image
+        run: |
+          docker login
+          #cat /home/runner/.docker/config.json
+          docker build -t $DOCKER_REGISTRY/$APPLICATION_NAME:$APPLICATION_VERSION-$GITHUB_RUN_ID
+	
+    # Container build and push to a Docker Container registry
+    - run: |
+        docker build . -t ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+        docker push ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+    
+    # Set the target Azure Kubernetes Service (AKS) cluster. 
+    - uses: azure/aks-set-context@v1
+      with:
+        creds: '${{ secrets.AZURE_CREDENTIALS }}'
+        cluster-name: ${{ env.CLUSTER_NAME }}
+        resource-group: ${{ env.CLUSTER_RESOURCE_GROUP }}
+    
+    # Create namespace if doesn't exist
+    - run: |
+        kubectl create namespace ${{ env.NAMESPACE }} --dry-run -o json | kubectl apply -f -
+    
+    # Create imagepullsecret for Azure Container registry (ACR)
+    - uses: azure/k8s-create-secret@v1
+      with:
+        container-registry-url: ${{ env.REGISTRY_NAME }}.azurecr.io
+        container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secret-name: ${{ env.REGISTRY_NAME }}-registry-connection
+        namespace: ${{ env.NAMESPACE }}
+    
+    # Deploy app to AKS
+    - uses: azure/k8s-deploy@v1
+      with:
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          ${{ env.REGISTRY_NAME }}.azurecr.io/myimage:${{ github.sha }}
+        imagepullsecrets: |
+          ${{ env.REGISTRY_NAME }}-registry-connection
+        namespace: ${{ env.NAMESPACE }}
