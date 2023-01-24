@@ -12,7 +12,7 @@ name: Build Dev Docker image
 on:
   push:
     branches:
-      - develop
+      - main
 
 jobs:
   push_to_registry:
