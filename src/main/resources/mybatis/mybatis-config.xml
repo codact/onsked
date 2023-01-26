@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <typeAliases>
+        <typeAlias alias="Integer" type="java.lang.Integer" />
+        <typeAlias alias="Long" type="java.lang.Long" />
+        <typeAlias alias="HashMap" type="java.util.HashMap" />
+        <typeAlias alias="LinkedHashMap" type="java.util.LinkedHashMap" />
+        <typeAlias alias="ArrayList" type="java.util.ArrayList" />
+        <typeAlias alias="LinkedList" type="java.util.LinkedList" />
+        <typeAlias type="com.amazech.onsked.domain.User" alias="user" />
+        <typeAlias alias="unregisteredUser" type="com.amazech.onsked.domain.UnregisteredUser"/>
+        <typeAlias alias="userMail" type="com.amazech.onsked.domain.UserMail"/>
+        <typeAlias alias="securityQuestion" type="com.amazech.onsked.domain.SecurityQuestion"/>
+        <typeAlias alias="userRole" type="com.amazech.onsked.domain.UserRole"/>
+        <typeAlias alias="payment" type="com.amazech.onsked.domain.Payment"/>
+        <typeAlias alias="timeZone" type="com.amazech.onsked.domain.TimeZone"/>
+        <typeAlias alias="upgradeOptions" type="com.amazech.onsked.domain.UpgradeOptions"/>
+        <typeAlias alias="userPayments" type="com.amazech.onsked.domain.UserPayments"/>
+        <typeAlias alias="paymentModes" type="com.amazech.onsked.domain.PaymentModes"/>
+        <typeAlias alias="business" type="com.amazech.onsked.domain.Business"/>
+        <typeAlias alias="location" type="com.amazech.onsked.domain.Location"/>
+        <typeAlias alias="paymentHistory" type="com.amazech.onsked.domain.PaymentHistory"/>
+        <typeAlias alias="client" type="com.amazech.onsked.domain.Client"/>
+    </typeAliases>
+</configuration>
