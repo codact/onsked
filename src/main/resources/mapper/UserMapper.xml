@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.amazech.onsked.dao.mapper.UserMapper">
-
     <resultMap id="result" type="user">
         <result property="userId" column="user_id"/>
         <result property="email" column="email"/>
@@ -716,11 +715,11 @@
         where user_id = #userId#
     </select>
 
-    <select id="getLastInsertId" resultMap="java.lang.Integer">
+    <select id="getLastInsertId" resultType="java.lang.Integer">
         select last_insert_id() as id;
     </select>
 
-    <select id="getLastUserId" resultMap="java.lang.Integer">
+    <select id="getLastUserId" resultType="java.lang.Integer">
         select max(user_id) as id from user_master;
     </select>
 
@@ -846,13 +845,13 @@
         where user_payments.payment_id=(select max(user_payments.payment_id) from user_payments) and user_payments.user_id = #userId# group by user_payments.user_id;
     </select>
 
-    <select id="checkEmailId" resultMap="java.lang.Integer">
+    <select id="checkEmailId" resultType="java.lang.Integer">
         select count(*)
         from user_master where
         email = #email#;
     </select>
 
-    <select id="checkUserSecurityAnswer" resultMap="java.lang.Integer">
+    <select id="checkUserSecurityAnswer" resultType="java.lang.Integer">
         select count(*)
         from user_master where
         email = #email# and
@@ -860,13 +859,13 @@
         (security_question2 = #securityQuestion1# and answer2 = #answer1#));
     </select>
 
-    <select id="getLastLoginTime" resultMap="java.sql.Timestamp">
+    <select id="getLastLoginTime" resultType="java.sql.Timestamp">
         select last_login_attempt
         from user_master where
         email = #email#;
     </select>
 
-    <select id="currentFailedAttemptCount" resultMap="java.lang.Integer">
+    <select id="currentFailedAttemptCount" resultType="java.lang.Integer">
         select login_attempts
         from user_master where
         email = #email#;
@@ -928,7 +927,7 @@
         where user_id = #userId#
     </update>
 
-    <select id="getLeftOutBusinessLimitForBusiness" resultMap="java.lang.Integer">
+    <select id="getLeftOutBusinessLimitForBusiness" resultType="java.lang.Integer">
         select ((select user_upgrade_levels.limit_businesses from user_upgrade_levels
         inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
         where user_payments.user_id = #userId# and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount!=0))
@@ -941,12 +940,12 @@
         where business.is_deleted = 'N' and business_user.user_id = #userId#)) as a;
     </select>
 
-    <select id="getBusinessesForPricing" resultMap="java.lang.Integer">
+    <select id="getBusinessesForPricing" resultType="java.lang.Integer">
         SELECT count(*) FROM business inner join business_user on business.biz_id = business_user.biz_id
         where business.is_deleted = 'N' and business_user.user_id = #userId#;
     </select>
 
-    <select id="getLeftOutLocationLimitForBusiness" resultMap="java.lang.Integer">
+    <select id="getLeftOutLocationLimitForBusiness" resultType="java.lang.Integer">
         select ((select user_upgrade_levels.limit_locations from user_upgrade_levels
         inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
         where user_payments.user_id = #userId# and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount!=0))
@@ -960,13 +959,13 @@
         where  business.is_deleted = 'N' and business_user.user_id = #userId# and location.is_active != 'D')))) as a;
     </select>
 
-    <select id="getLocationsForPricing" resultMap="java.lang.Integer">
+    <select id="getLocationsForPricing" resultType="java.lang.Integer">
         select count(*) from location inner join business on location.biz_id = business.biz_id
         join business_user on business.biz_id = business_user.biz_id
         where  business.is_deleted = 'N' and business_user.user_id = #userId# and location.is_active != 'D';
     </select>
 
-    <select id="getLeftOutResourceLimitForBusiness" resultMap="java.lang.Integer">
+    <select id="getLeftOutResourceLimitForBusiness" resultType="java.lang.Integer">
         select ((select user_upgrade_levels.limit_resources from user_upgrade_levels
         inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
         where user_payments.user_id = #userId# and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount!=0))
@@ -981,35 +980,35 @@
         where resource.is_active in('N','Y') and b.is_deleted = 'N' and business_user.user_id = #userId#)) as b;
     </select>
 
-    <select id="getResourceForPricing" resultMap="java.lang.Integer">
+    <select id="getResourceForPricing" resultType="java.lang.Integer">
         select count(*) from resource inner join business_user on resource.biz_id = business_user.biz_id
         join business b on b.biz_id=resource.biz_id
         where resource.is_active in('N','Y') and b.is_deleted = 'N' and business_user.user_id = #userId#;
     </select>
 
-    <select id="getLevelId" resultMap="java.lang.String">
+    <select id="getLevelId" resultType="java.lang.String">
         select user_payments.level_id from user_payments join user_upgrade_levels on user_payments.level_id=user_upgrade_levels.level_id
         and user_payments.payment_id=(select max(payment_id) from user_payments where user_id=#userId#);
     </select>
 
 
-    <select id="checkBusinessExpiryDate" resultMap="java.lang.Integer">
+    <select id="checkBusinessExpiryDate" resultType="java.lang.Integer">
         select (datediff(DATE_ADD((select package_expiry_dt from user_payments where payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId#) and user_id=#userId#),INTERVAL 1 Month), utc_timestamp()))as x;
     </select>
 
-    <select id="checkBusinessExpiryDateWithoutAdding" resultMap="java.lang.Integer">
+    <select id="checkBusinessExpiryDateWithoutAdding" resultType="java.lang.Integer">
         select (datediff((select package_expiry_dt from user_payments where payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId#) and user_id=#userId#), utc_timestamp()))as x;
     </select>
 
-    <select id="getBusinessExpiryDate" resultMap="java.lang.String">
+    <select id="getBusinessExpiryDate" resultType="java.lang.String">
         SELECT SUBSTRING(package_expiry_dt, 1, 10) FROM user_payments where payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId#);
     </select>
 
-    <select id="getIncrementedExpiryDate" resultMap="java.lang.String">
+    <select id="getIncrementedExpiryDate" resultType="java.lang.String">
         SELECT SUBSTRING(DATE_ADD(package_expiry_dt,INTERVAL 1 Month),1,10)  FROM user_payments where payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId#);
     </select>
 
-    <select id="getCountryCallingCode" resultMap="java.lang.String">
+    <select id="getCountryCallingCode" resultType="java.lang.String">
         SELECT country_calling_code FROM country where country_code=#countryCode#;
     </select>
 
@@ -1088,7 +1087,7 @@
 
     </select>
 
-    <select id="getResourceTypeCode" resultMap="java.lang.String">
+    <select id="getResourceTypeCode" resultType="java.lang.String">
         SELECT resource.res_role_code from resource
         join business on business.biz_id = resource.biz_id
         join user_master on user_master.email = resource.email

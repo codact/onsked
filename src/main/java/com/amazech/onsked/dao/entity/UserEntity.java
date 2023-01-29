@@ -86,6 +86,6 @@ public class UserEntity {
 
 
     //user appt payment
-    private int amount;
+    private Integer amount;
 
 }

@@ -4,10 +4,12 @@ import com.amazech.onsked.dao.entity.CategoryEntity;
 import com.amazech.onsked.dao.entity.CountryEntity;
 import com.amazech.onsked.dao.entity.UserEntity;
 import com.amazech.onsked.dao.entity.UserRoleEntity;
+import com.amazech.onsked.dao.mapper.UserMapper;
 import com.amazech.onsked.dao.repo.CountryRepository;
 import com.amazech.onsked.dao.repo.UserRepository;
 import com.amazech.onsked.dao.repo.UserRoleRepository;
 import com.amazech.onsked.domain.*;
+import com.amazech.onsked.exceptions.DataAccessException;
 import com.amazech.onsked.exceptions.GenericBusinessException;
 import com.amazech.onsked.service.UserSvc;
 import lombok.extern.slf4j.Slf4j;
@@ -35,6 +37,9 @@ public class UserSvcImpl implements UserSvc {
 
     @Autowired
     ModelMapper modelMapper;
+
+    @Autowired
+    UserMapper userMapper;
     @Override
     public User getUser(String email, String password) throws GenericBusinessException{
         log.debug("Before calling DAO method getUser()");
@@ -42,15 +47,18 @@ public class UserSvcImpl implements UserSvc {
         Optional<UserEntity> opUserEntity = userRepository.findByEmailAndPassword(email, password);
         if(opUserEntity.isPresent()){
              user = modelMapper.map(opUserEntity.get(), User.class);
-        }else{
-            throw new GenericBusinessException("User not found");
         }
         log.debug("After calling DAO method getUser()");
         return user;
     }
 
     @Override
-    public User getUserByfbEmail(String email) throws GenericBusinessException{
+    public User getUserByfbEmail(String email) throws GenericBusinessException {
+        return null;
+    }
+
+    @Override
+    public User getUserByEmailId(String email) throws GenericBusinessException{
 
         log.debug("Before calling DAO method getUser()");
         User user = null;
@@ -65,7 +73,7 @@ public class UserSvcImpl implements UserSvc {
     }
 
     @Override
-    public void addUser(User user) throws GenericBusinessException
+    public Integer addUser(User user) throws GenericBusinessException
     {
         if(user == null){
             log.debug("User is null");
@@ -75,6 +83,7 @@ public class UserSvcImpl implements UserSvc {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userEntity = userRepository.save(userEntity);
         log.debug("After calling DAO method getUser()");
+        return userEntity.getUserId();
 
     }
 
@@ -142,28 +151,34 @@ public class UserSvcImpl implements UserSvc {
     }
 
     @Override
-    public void addUserMail(UserMail user, HttpServletRequest request) {
+    public void addUserMail(UserMail user, HttpServletRequest request) throws DataAccessException {
+        log.debug("Before calling DAO method addUserMail");
+        userMapper.addUserMail(user, request);
 
     }
 
     @Override
     public void updateUserMail(UserMail user) {
-
+        log.debug("Before calling DAO method updateUserMail");
+        userMapper.updateUserMail(user);
     }
 
     @Override
     public void activateUserMail(String verHash, Integer userId) {
-
+        log.debug("Before calling DAO method activateUserMail");
+        userMapper.activateUserMail(verHash, userId);
     }
 
     @Override
-    public UserMail getUserMailDetailsByUserId(Integer userId) {
-        return  null;
+    public UserMail getUserMailDetailsByUserId(Integer userId) throws DataAccessException {
+        log.debug("Before calling DAO method getUserMailDetailsByUserId");
+        return userMapper.getUserMailDetailsByUserId(userId);
     }
 
     @Override
-    public UserMail getUserMailDetailsByVerCode(Integer verCode) {
-        return null;
+    public UserMail getUserMailDetailsByVerCode(Integer verCode) throws DataAccessException {
+        log.debug("Before calling DAO method getUserMailDetailsByVerCode");
+        return userMapper.getUserMailDetailsByVerCode(verCode);
     }
 
     @Override
@@ -176,22 +191,25 @@ public class UserSvcImpl implements UserSvc {
     }
 
     @Override
-    public List<SecurityQuestion> getAllSecurityQuestions() {
-        return null;
+    public List<SecurityQuestion> getAllSecurityQuestions() throws DataAccessException {
+        log.debug("Before calling DAO method getAllSecurityQuestions");
+        return userMapper.getAllSecurityQuestions();
     }
 
     @Override
     public SMSInterface getSmsInterface() {
+        log.debug("Before calling DAO method getSmsInterface");
         return null;
     }
 
     @Override
     public void setSmsInterface(SMSInterface smsInterface) {
-
+        log.debug("Before calling DAO method setSmsInterface");
     }
 
     @Override
     public String paymentRequest(Payment payment) throws IOException {
+        log.debug("Before calling DAO method paymentRequest");
         return null;
     }
 
@@ -208,207 +226,249 @@ public class UserSvcImpl implements UserSvc {
     }
 
     @Override
-    public void activateBusiness(Integer userId) {
+    public void activateBusiness(Integer userId) throws DataAccessException {
+        log.debug("Before calling DAO method activateBusiness");
+        userMapper.activateBusiness(userId);
+        log.debug("After calling DAO method activateBusiness");
+    }
+
+    @Override
+    public String getBusinessExpiryDate(Integer userId) throws DataAccessException {
+        log.debug("Before calling DAO method getBusinessExpiryDate");
+        return userMapper.getBusinessExpiryDate(userId);
+    }
+
+    @Override
+    public String getIncrementedExpiryDate(Integer userId) throws DataAccessException {
+        log.debug("Before calling DAO method getIncrementedExpiryDate");
+        return userMapper.getIncrementedExpiryDate(userId);
+    }
+
+    @Override
+    public List<TimeZones> getTimeZonesByCountryCode(String countryCode) throws DataAccessException {
+        log.debug("Before calling DAO method getIncrementedExpiryDate");
+        return userMapper.getTimeZonesByCountryCode(countryCode);
+    }
+
+    @Override
+    public List<UpgradeOptions> getUpgradeOptions() throws DataAccessException {
+        log.debug("Before calling DAO method getUpgradeOptions");
+        return userMapper.getUpgradeOptions();
+    }
+
+    @Override
+    public void addPaymentDetailsForUpgaradeUser(Payment payment) throws DataAccessException {
+        log.debug("Before calling DAO method addPaymentDetailsForUpgaradeUser");
+         userMapper.addPaymentDetailsForUpgaradeUser(payment);
+        log.debug("After calling DAO method getUpgradeOptions");
 
     }
 
     @Override
-    public String getBusinessExpiryDate(Integer userId) {
-        return null;
+    public List<PaymentModes> getPaymentModes() throws DataAccessException {
+        log.debug("Before calling DAO method addPaymentDetailsForUpgaradeUser");
+        return userMapper.getPaymentModes();
     }
 
     @Override
-    public String getIncrementedExpiryDate(Integer userId) {
-        return null;
+    public UserPayments getUserPaymentDetails(Integer userId) throws DataAccessException {
+        log.debug("Before calling DAO method addPaymentDetailsForUpgaradeUser");
+        return userMapper.getUserPaymentDetails(userId);
     }
 
     @Override
-    public List<TimeZones> getTimeZonesByCountryCode(String countryCode) {
-        return null;
+    public void addPaymentDetails(UserPayments userPayments) throws DataAccessException {
+        log.debug("Before calling DAO method addPaymentDetailsForUpgaradeUser");
+         userMapper.addPaymentDetails(userPayments);
+        log.debug("After calling DAO method addPaymentDetailsForUpgaradeUser");
     }
 
     @Override
-    public List<UpgradeOptions> getUpgradeOptions() {
-        return null;
+    public List<Business> getLatestRegisteredBusiness() throws DataAccessException {
+        log.debug("Before calling DAO method getLatestRegisteredBusiness");
+        return userMapper.getLatestRegisteredBusiness();
     }
 
     @Override
-    public void addPaymentDetailsForUpgaradeUser(Payment payment) {
-
+    public Integer checkEmailIdExists(String email) throws DataAccessException {
+        log.debug("Before calling DAO method getLatestRegisteredBusiness");
+        return userMapper.checkEmailIdExists(email);
     }
 
     @Override
-    public List<PaymentModes> getPaymentModes() {
-        return null;
+    public Integer checkUserSecurityAnswer(Integer securityQuestion1, String answer1, String email, HttpServletRequest request) throws DataAccessException {
+        log.debug("Before calling DAO method checkUserSecurityAnswer");
+        return userMapper.checkUserSecurityAnswer(securityQuestion1, answer1, email, request);
+    }
+
+
+    @Override
+    public void updateUserLoginDt(Integer userId) throws DataAccessException {
+        log.debug("Before calling DAO method updateUserLoginDt");
+        userMapper.updateUserLoginDt(userId);
     }
 
     @Override
-    public UserPayments getUserPaymentDetails(Integer userId) {
-        return null;
+    public Integer updateLoginAttempts(String email) throws DataAccessException {
+        log.debug("Before calling DAO method updateLoginAttempts");
+        return userMapper.updateLoginAttempts(email);
     }
 
     @Override
-    public void addPaymentDetails(UserPayments userPayments) {
-
+    public void resetLoginCounter(Integer userId) throws DataAccessException {
+        log.debug("Before calling DAO method resetLoginCounter");
+        userMapper.resetLoginCounter(userId);
     }
 
     @Override
-    public List<Business> getLatestRegisteredBusiness() {
-        return null;
+    public void resetPassword(String email, String password) throws DataAccessException {
+        log.debug("Before calling DAO method resetPassword");
+        userMapper.resetPassword(email, password);
     }
 
     @Override
-    public Integer checkEmailIdExists(String email) {
-        return null;
+    public SecurityQuestion getRandomUserSecurityQuestion(String email) throws DataAccessException {
+        log.debug("Before calling DAO method getRandomUserSecurityQuestion");
+        return userMapper.getRandomUserSecurityQuestion(email);
     }
 
     @Override
-    public Integer checkUserSecurityAnswer(Integer securityQuestion1, String answer1, String email, HttpServletRequest request) {
-        return null;
+    public int addUnregisteredUserDetails(UnregisteredUser unregisteredUser) throws DataAccessException {
+        log.debug("Before calling DAO method addUnregisteredUserDetails");
+        return userMapper.addUnregisteredUserDetails(unregisteredUser);
     }
 
-    @Override
-    public void updateUserLoginDt(Integer userId) {
 
-    }
 
     @Override
-    public Integer updateLoginAttempts(String email) {
-        return null;
-    }
-
-    @Override
-    public void resetLoginCounter(Integer userId) {
-
-    }
-
-    @Override
-    public void resetPassword(String email, String password) {
-
-    }
-
-    @Override
-    public SecurityQuestion getRandomUserSecurityQuestion(String email) {
-        return null;
-    }
-
-    @Override
-    public int addUnregisteredUserDetails(UnregisteredUser unregisteredUser) {
-        return 0;
-    }
-
-    @Override
-    public User getUserByEmailId(String email) {
-        return null;
-    }
-
-    @Override
-    public void updateUserRole(String roleCode, Integer userId) {
-
+    public void updateUserRole(String roleCode, Integer userId) throws DataAccessException {
+        log.debug("Before calling DAO method updateUserRole");
+         userMapper.updateUserRole(roleCode, userId);
     }
 
     @Override
     public void sendContactUsMail(String[] recipientIds, String name, String userEmailId, String phoneNumber, String reason, String comment, String requestPath) {
-
+        log.debug("Before calling DAO method sendContactUsMail");
+        userMapper.sendContactUsMail(recipientIds, name, userEmailId, phoneNumber, reason, comment, requestPath);
     }
 
     @Override
     public void sendAlertMail(List<AppointmentSchedule> appts, String requestPath) {
-
+        log.debug("Before calling DAO method sendAlertMail");
+        userMapper.sendAlertMail(appts,  requestPath);
     }
 
     @Override
     public void sendAlertSMS(List<AppointmentSchedule> appts) {
-
+        log.debug("Before calling DAO method sendAlertSMS");
+        userMapper.sendAlertSMS(appts);
     }
 
     @Override
     public void sendPromtionMail(String[] recipientIds, Promotion promotion, int noOfRecipientIds, String requestPath) {
-
+        log.debug("Before calling DAO method sendPromtionMail");
+        userMapper.sendPromtionMail(recipientIds, promotion, noOfRecipientIds, requestPath);
     }
 
     @Override
     public int checkBusinessLimit(int userId) {
-        return 0;
+        log.debug("Before calling DAO method checkBusinessLimit");
+       return userMapper.checkBusinessLimit(userId);
     }
 
     @Override
     public int getBusinessesForPricing(int userId) {
-        return 0;
+        log.debug("Before calling DAO method getBusinessesForPricing");
+        return userMapper.getBusinessesForPricing(userId);
     }
 
     @Override
     public Integer checkLocationLimit(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method checkLocationLimit");
+        return userMapper.checkLocationLimit(userId);
     }
 
     @Override
     public Integer getLocationsForPricing(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method getLocationsForPricing");
+        return userMapper.getLocationsForPricing(userId);
     }
 
     @Override
     public Integer checkResourceLimit(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method checkResourceLimit");
+        return userMapper.checkResourceLimit(userId);
     }
 
     @Override
     public Integer getResourceForPricing(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method getResourceForPricing");
+        return userMapper.getResourceForPricing(userId);
     }
 
     @Override
     public Integer checkExpiryDate(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method checkExpiryDate");
+        return userMapper.checkExpiryDate(userId);
     }
 
     @Override
     public Integer expiryDateWithoutAdding(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method expiryDateWithoutAdding");
+        return userMapper.expiryDateWithoutAdding(userId);
     }
 
     @Override
     public List<PaymentHistory> acctPaymentHistory(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method acctPaymentHistory");
+        return userMapper.acctPaymentHistory(userId);
     }
 
     @Override
     public PaymentHistory getPaymentPackageDetails(int levelId) {
-        return null;
+        log.debug("Before calling DAO method getPaymentPackageDetails");
+        return userMapper.getPaymentPackageDetails(levelId);
     }
 
     @Override
     public List<Business> getUserBusinessUserId(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method getUserBusinessUserId");
+        return userMapper.getUserBusinessUserId(userId);
     }
 
     @Override
     public WeakHashMap<String, Object> getStaffWorkingBizId(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method getStaffWorkingBizId");
+        return userMapper.getStaffWorkingBizId(userId);
     }
 
     @Override
     public User getUserPaymentDetailsByUserId(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method getUserPaymentDetailsByUserId");
+        return userMapper.getUserPaymentDetailsByUserId(userId);
     }
 
     @Override
     public List<PaymentHistory> getUserSubscriptionByUserId(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method getUserSubscriptionByUserId");
+        return userMapper.getUserSubscriptionByUserId(userId);
     }
 
     @Override
     public HashMap<String, String> getActiveBusinesses(Integer userId) {
-        return null;
+        log.debug("Before calling DAO method getActiveBusinesses");
+        return userMapper.getActiveBusinesses(userId);
     }
 
     @Override
     public User getApptUserInfo(String userTblName, int apptHolderId, String colName) {
-        return null;
+        log.debug("Before calling DAO method getApptUserInfo");
+        return userMapper.getApptUserInfo(userTblName, apptHolderId, colName);
     }
 
     @Override
     public UnregisteredUser getUnregisteredUserDetails(Integer unregisteredUserId) {
-        return null;
+        log.debug("Before calling DAO method getUnregisteredUserDetails");
+        return userMapper.getUnregisteredUserDetails(unregisteredUserId);
     }
 }

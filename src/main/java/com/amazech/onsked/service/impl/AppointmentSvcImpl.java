@@ -1,6 +1,7 @@
 package com.amazech.onsked.service.impl;
 
 import com.amazech.onsked.dao.entity.CategoryEntity;
+import com.amazech.onsked.dao.mapper.UserMapper;
 import com.amazech.onsked.dao.repo.AppointmentRepository;
 import com.amazech.onsked.dao.repo.CategoryRepository;
 import com.amazech.onsked.domain.*;
@@ -21,7 +22,6 @@ public class AppointmentSvcImpl implements AppointmentSvc {
     CategoryRepository categoryRepository;
     @Autowired
     ModelMapper modelMapper;
-
 
     @Override
     public Integer addBusinessCategory(Category category) {
