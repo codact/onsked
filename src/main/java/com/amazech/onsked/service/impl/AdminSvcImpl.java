@@ -1,12 +1,11 @@
 package com.amazech.onsked.service.impl;
 
-import com.amazech.onsked.dao.entity.CategoryEntity;
-import com.amazech.onsked.dao.entity.CountryEntity;
-import com.amazech.onsked.dao.repo.CategoryRepository;
-import com.amazech.onsked.dao.repo.CountryRepository;
+import com.amazech.onsked.dao.entity.*;
+import com.amazech.onsked.dao.repo.*;
 import com.amazech.onsked.domain.*;
 import com.amazech.onsked.exceptions.GenericBusinessException;
 import com.amazech.onsked.service.AdminSvc;
+import com.amazech.onsked.util.DateTimeUtil;
 import com.amazech.onsked.util.OnskedList;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -26,6 +25,18 @@ public class AdminSvcImpl implements AdminSvc {
     @Autowired
     private CountryRepository countryRepository;
     @Autowired
+    private ServiceMasterRepository serviceMasterRepository;
+    @Autowired
+    private HolidayRepository holidayRepository;
+    @Autowired
+    private StateRepository stateRepository;
+    @Autowired
+    private BusinessRepository businessRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
     ModelMapper modelMapper;
 
     @Override
@@ -37,20 +48,18 @@ public class AdminSvcImpl implements AdminSvc {
     }
 
     @Override
-    public void updateBusinessCategory(Category category) {
+    public void updateBusinessCategory(Category category) throws GenericBusinessException {
 
         log.debug("Before calling DAO method updateBusinessCategory()");
         CategoryEntity categoryEntity = modelMapper.map(category, CategoryEntity.class);
         Optional<CategoryEntity> value = categoryRepository.findById(categoryEntity.getCategoryCode());
         if(value.isPresent()){
-            log.debug("Existing categoryCode.");
-            /*
-            merge or replace
-             */
+            log.debug("Updating categoryCode.");
+            categoryRepository.deleteById(categoryEntity.getCategoryCode());
             categoryRepository.save(categoryEntity);
         }else{
-            log.debug("New categoryCode.");
-            categoryRepository.save(categoryEntity);
+            log.debug("categoryCode does not exist.");
+            throw new GenericBusinessException("category does not exist.");
         }
     }
 
@@ -96,6 +105,7 @@ public class AdminSvcImpl implements AdminSvc {
                 categoryEntity.setIsActive("N");
             else
                 categoryEntity.setIsActive("Y");
+            categoryRepository.save(categoryEntity);
         }
         else
             throw new GenericBusinessException("categoryCode "+categoryCode+" does not exist.");
@@ -105,15 +115,42 @@ public class AdminSvcImpl implements AdminSvc {
     @Override
     public void addServiceToCategory(ServiceMaster servicemaster) {
 
+        log.debug("Before calling method addServiceToCategory()");
+        ServiceMasterEntity serviceMasterEntity = modelMapper.map(servicemaster, ServiceMasterEntity.class);
+        serviceMasterEntity = serviceMasterRepository.save(serviceMasterEntity);
+
     }
 
     @Override
-    public ServiceMaster getServiceByServiceCode(String serviceCode) {
-        return null;
+    public ServiceMaster getServiceByServiceCode(String serviceCode) throws GenericBusinessException {
+
+        log.debug("Before calling method getServiceByServiceCode()");
+        Optional<ServiceMasterEntity> value = serviceMasterRepository.findById(Integer.parseInt(serviceCode));
+        if(value.isPresent()){
+            log.debug("serviceCode is present.");
+            ServiceMaster serviceMaster = modelMapper.map(value.get(), ServiceMaster.class);
+            return serviceMaster;
+        }else {
+            log.debug("serviceCode is not present.");
+            throw new GenericBusinessException("serviceCode "+serviceCode+" does not exist.");
+        }
     }
 
     @Override
-    public void updateServiceDetails(ServiceMaster service) {
+    public void updateServiceDetails(ServiceMaster service) throws GenericBusinessException {
+
+        log.debug("Before calling method updateServiceDetails()");
+        ServiceMasterEntity serviceMasterEntity = modelMapper.map(service, ServiceMasterEntity.class);
+        Optional<ServiceMasterEntity> value = serviceMasterRepository.findById(serviceMasterEntity.getServiceCode());
+        if(value.isPresent()){
+            log.debug("Deleting existing service code details");
+            serviceMasterRepository.deleteById(value.get().getServiceCode());
+            log.debug("Saving updated values");
+            serviceMasterRepository.save(serviceMasterEntity);
+        }else{
+            log.debug("service code "+serviceMasterEntity.getServiceCode()+" doesn't exist.");
+            throw new GenericBusinessException("serviceCode "+serviceMasterEntity.getServiceCode()+" does not exist");
+        }
 
     }
 
@@ -136,62 +173,151 @@ public class AdminSvcImpl implements AdminSvc {
 
     @Override
     public Integer checkService(ServiceMaster service) {
-        return null;
+        log.debug("Before calling method checkService()");
+        List<ServiceMasterEntity> value = serviceMasterRepository.findAllByServiceName(service.getServiceName());
+        return value.size();
     }
 
     @Override
     public void addService(ServiceMaster service) {
-
+        log.debug("Before calling method addService()");
+        ServiceMasterEntity serviceMasterEntity = modelMapper.map(service, ServiceMasterEntity.class);
+        serviceMasterEntity = serviceMasterRepository.save(serviceMasterEntity);
     }
 
     @Override
-    public ServiceMaster getServiceByCategoryCodeServiceCode(String categoryCode, String serviceCode) {
-        return null;
+    public ServiceMaster getServiceByCategoryCodeServiceCode(String categoryCode, String serviceCode) throws GenericBusinessException {
+
+        log.debug("Before calling method getServiceByCategoryCodeServiceCode()");
+        Optional<ServiceMasterEntity> value = serviceMasterRepository.findByServiceCodeAndCategoryCode(Integer.parseInt(serviceCode), categoryCode);
+        if(value.isPresent()){
+            log.debug("service matching (serviceCode, categoryCode) is present.");
+            ServiceMaster serviceMaster = modelMapper.map(value.get(), ServiceMaster.class);
+            return serviceMaster;
+        }else {
+            log.debug("service matching (serviceCode, categoryCode) is NOT present.");
+            throw new GenericBusinessException("service does not exist.");
+        }
     }
 
     @Override
-    public void updateService(ServiceMaster cmdService, String categoryCodePresent, String serviceCodePresent) {
+    public void updateService(ServiceMaster cmdService, String categoryCodePresent, String serviceCodePresent) throws GenericBusinessException {
 
+        log.debug("Before calling method updateService()");
+        ServiceMasterEntity serviceMasterEntity = modelMapper.map(cmdService, ServiceMasterEntity.class);
+        Optional<ServiceMasterEntity> value = serviceMasterRepository.findByServiceCodeAndCategoryCode(Integer.parseInt(serviceCodePresent), categoryCodePresent);
+        if(value.isPresent()){
+            log.debug("Updating service");
+            serviceMasterRepository.delete(value.get());
+            serviceMasterRepository.save(serviceMasterEntity);
+        }else{
+            log.debug("Service does not exist");
+            throw new GenericBusinessException("Service does not exist");
+        }
     }
 
     @Override
-    public void deleteService(String categoryCode, String serviceCode) {
-
+    public void deleteService(String categoryCode, String serviceCode) throws GenericBusinessException {
+        log.debug("Before calling method deleteService()");
+        Optional<ServiceMasterEntity> value = serviceMasterRepository.findByServiceCodeAndCategoryCode(Integer.parseInt(serviceCode), categoryCode);
+        if(value.isPresent()){
+            log.debug("Deleting service");
+            serviceMasterRepository.delete(value.get());
+        }else{
+            log.debug("Service does not exist");
+            throw new GenericBusinessException("Service does not exist");
+        }
     }
 
     @Override
-    public List<ServiceMaster> getAllServices() {
-        return null;
+    public List<ServiceMaster> getAllServices() throws GenericBusinessException {
+        log.debug("Before calling method getAllServices()");
+        List<ServiceMasterEntity> serviceMasterEntities = serviceMasterRepository.findAll();
+        if(!serviceMasterEntities.isEmpty()) {
+            List<ServiceMaster> serviceMasters = serviceMasterEntities.stream()
+                    .map(serviceMasterEntity -> modelMapper.map(serviceMasterEntity, ServiceMaster.class))
+                    .collect(Collectors.toList());
+            return serviceMasters;
+        }
+        else
+            throw new GenericBusinessException("No services available!");
     }
 
     @Override
-    public List<ServiceMaster> getMasterServices(Integer categoryCode) {
-        return null;
+    public List<ServiceMaster> getMasterServices(Integer categoryCode) throws GenericBusinessException {
+        log.debug("Before calling method getMasterServices()");
+        List<ServiceMasterEntity> serviceMasterEntities = serviceMasterRepository.findByCategoryCodeAndIsActive(categoryCode.toString(), "Y");
+
+        if(!serviceMasterEntities.isEmpty()){
+            List<ServiceMaster> serviceMasters = serviceMasterEntities.stream()
+                    .map(serviceMasterEntity -> modelMapper.map(serviceMasterEntity, ServiceMaster.class))
+                    .collect(Collectors.toList());
+            return serviceMasters;
+        }else {
+            log.debug("services does not exist.");
+            throw new GenericBusinessException("services does not exist.");
+        }
     }
 
     @Override
-    public void enableDisableHoliday(String countryCode, String holidayDt) {
-
+    public void enableDisableHoliday(String countryCode, String holidayDt) throws GenericBusinessException {
+        log.debug("Before calling method enableDisableHoliday()");
+        Optional<HolidayEntity> value = holidayRepository.findByCountryCodeAndHolidayDt(countryCode, holidayDt);
+        if(value.isPresent()){
+            HolidayEntity holidayEntity = value.get();
+            if(holidayEntity.getIsActive().equalsIgnoreCase("Y"))
+                holidayEntity.setIsActive("N");
+            else
+                holidayEntity.setIsActive("Y");
+            holidayRepository.save(holidayEntity);
+        }
+        else
+            throw new GenericBusinessException("Holiday not present");
     }
 
     @Override
     public Integer checkDefaultHoliday(String countryCode, String holidayDt) {
-        return null;
+        log.debug("Before calling method checkDefaultHoliday()");
+        Optional<HolidayEntity> value = holidayRepository.findByCountryCodeAndHolidayDt(countryCode, holidayDt);
+        if(value.isPresent())
+            return 1;
+        else
+            return 0;
     }
 
     @Override
     public Holiday addDefaultHoliday(Holiday holiday) {
-        return null;
+        log.debug("Before calling method addDefaultHoliday()");
+        HolidayEntity holidayEntity = modelMapper.map(holiday, HolidayEntity.class);
+        holidayEntity.setIsActive("Y");
+        holidayEntity.setCreatedDt(DateTimeUtil.getUTCDateTimeAsDate());
+        holidayEntity.setModifiedDt(DateTimeUtil.getUTCDateTimeAsDate());
+        holidayEntity = holidayRepository.save(holidayEntity);
+        return holiday;
     }
 
     @Override
-    public Holiday getHolidayByDateAndCountry(String countryCode, String holidayDt) {
-        return null;
+    public Holiday getHolidayByDateAndCountry(String countryCode, String holidayDt) throws GenericBusinessException {
+        log.debug("Before calling method getHolidayByDateAndCountry()");
+        Optional<HolidayEntity> value = holidayRepository.findByCountryCodeAndHolidayDt(countryCode, holidayDt);
+        if(value.isPresent())
+            return modelMapper.map(value.get(), Holiday.class);
+        else
+            throw new GenericBusinessException("Holiday does not exist");
     }
 
     @Override
-    public void updateDefaultHoliday(Holiday cmdHoliday, String countryCode, String holidayDt) {
-
+    public void updateDefaultHoliday(Holiday cmdHoliday, String countryCode, String holidayDt) throws GenericBusinessException {
+        log.debug("Before calling method updateDefaultHoliday()");
+        Optional<HolidayEntity> value = holidayRepository.findByCountryCodeAndHolidayDt(countryCode, holidayDt);
+        if(value.isPresent()) {
+            log.debug("Updating Holiday...");
+            HolidayEntity entity = modelMapper.map(cmdHoliday, HolidayEntity.class);
+            entity.setModifiedDt(DateTimeUtil.getUTCDateTimeAsDate());
+            holidayRepository.save(entity);
+        }
+        else
+            throw new GenericBusinessException("Holiday does not exist");
     }
 
     @Override
@@ -248,8 +374,16 @@ public class AdminSvcImpl implements AdminSvc {
     }
 
     @Override
-    public void updateCountry(Country cmdCountry, String countryCodePresent) {
-
+    public void updateCountry(Country cmdCountry, String countryCodePresent) throws GenericBusinessException {
+        log.debug("Before calling method updateCountry()");
+        Optional<CountryEntity> value = countryRepository.findById(countryCodePresent);
+        if(value.isPresent()){
+            log.debug("Updating country details");
+            CountryEntity countryEntity = modelMapper.map(cmdCountry, CountryEntity.class);
+            countryRepository.save(countryEntity);
+        }
+        else
+            throw new GenericBusinessException("Country does not exist");
     }
 
     @Override
@@ -270,26 +404,63 @@ public class AdminSvcImpl implements AdminSvc {
 
     @Override
     public void deleteState(String countryCode, String stateCode) {
-
+        log.debug("Before calling method deleteState()");
+        StateId stateId = new StateId();
+        stateId.setCountry_code(countryCode);
+        stateId.setState_code(stateCode);
+        stateRepository.deleteById(stateId);
     }
 
     @Override
     public void addState(State state) {
-
+        log.debug("Before calling method addState()");
+        state.setStateCode(state.getStateCode().toUpperCase());
+        StateEntity stateEntity = modelMapper.map(state, StateEntity.class);
+        stateRepository.save(stateEntity);
     }
 
     @Override
-    public State getStateByCountryCodeStateCode(String countryCode, String stateCode) {
-        return null;
+    public State getStateByCountryCodeStateCode(String countryCode, String stateCode) throws GenericBusinessException {
+        log.debug("Before calling method getStateByCountryCodeStateCode()");
+        StateId stateId = new StateId();
+        stateId.setCountry_code(countryCode);
+        stateId.setState_code(stateCode.toUpperCase());
+        Optional<StateEntity> value = stateRepository.findById(stateId);
+        if(value.isPresent())
+            return modelMapper.map(value.get(), State.class);
+        else
+            throw new GenericBusinessException("State not present");
     }
 
     @Override
-    public void updateState(State cmdState, String countryCodePresent, String stateCodePresent) {
-
+    public void updateState(State cmdState, String countryCodePresent, String stateCodePresent) throws GenericBusinessException {
+        log.debug("Before calling method getStateByCountryCodeStateCode()");
+        StateId stateId = new StateId();
+        stateId.setCountry_code(countryCodePresent);
+        stateId.setState_code(stateCodePresent.toUpperCase());
+        Optional<StateEntity> value = stateRepository.findById(stateId);
+        if(value.isPresent()){
+            cmdState.setStateCode(cmdState.getStateCode().toUpperCase());
+            StateEntity stateEntity = modelMapper.map(cmdState, StateEntity.class);
+            stateRepository.save(stateEntity);
+        }else
+            throw new GenericBusinessException("State not present");
     }
 
     @Override
-    public void enableDisableBusiness(Integer bizId) {
+    public void enableDisableBusiness(Integer bizId) throws GenericBusinessException {
+        log.debug("Before calling method enableDisableBusiness()");
+        Optional<BusinessEntity> value = businessRepository.findById(bizId);
+        if(value.isPresent()){
+            BusinessEntity businessEntity = value.get();
+            if(businessEntity.getIsActive().equalsIgnoreCase("Y"))
+                businessEntity.setIsActive("N");
+            else
+                businessEntity.setIsActive("Y");
+            businessRepository.save(businessEntity);
+        }
+        else
+            throw new GenericBusinessException("businessId "+bizId+" does not exist.");
 
     }
 
@@ -359,8 +530,17 @@ public class AdminSvcImpl implements AdminSvc {
     }
 
     @Override
-    public void upgradeUser(Integer userId) {
-
+    public void upgradeUser(Integer userId) throws GenericBusinessException {
+        log.debug("Before calling upgradeUser()");
+        Optional<UserRoleEntity> value = userRoleRepository.findById(userId);
+        if(value.isPresent()){
+            log.debug("Upgrading user");
+            UserRoleEntity userRoleEntity = value.get();
+            userRoleEntity.setRoleCode("BIZADMIN");
+            userRoleRepository.save(userRoleEntity);
+        }
+        else
+            throw new GenericBusinessException("User id does not exist");
     }
 
     @Override
@@ -395,7 +575,17 @@ public class AdminSvcImpl implements AdminSvc {
 
     @Override
     public void updateOnskedUsers(String userId) {
-
+        log.debug("Before calling method updateOnskedUsers()");
+        Optional<UserEntity> value = userRepository.findById(Integer.parseInt(userId));
+        if(value.isPresent()){
+            log.debug("Updating user");
+            UserEntity userEntity = value.get();
+            if(userEntity.getIsActive().equalsIgnoreCase("Y"))
+                userEntity.setIsActive("N");
+            else
+                userEntity.setIsActive("Y");
+            userRepository.save(userEntity);
+        }
     }
 
     @Override

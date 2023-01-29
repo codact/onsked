@@ -12,7 +12,7 @@ public interface AdminSvc {
     Integer addBusinessCategory(Category category);
 
     // Update the Business Categories for a given categoryId
-    void updateBusinessCategory(Category category);
+    void updateBusinessCategory(Category category) throws GenericBusinessException;
 
     // Get the details for a particular Category given categoryCode
     Category getCategoryByCategoryCode(Integer categoryCode);
@@ -27,10 +27,10 @@ public interface AdminSvc {
     void addServiceToCategory(ServiceMaster servicemaster);
 
     // Get the details for a particular service given servicecode
-    ServiceMaster getServiceByServiceCode(String serviceCode);
+    ServiceMaster getServiceByServiceCode(String serviceCode) throws GenericBusinessException;
 
     // update the Service to database
-    void updateServiceDetails(ServiceMaster service);
+    void updateServiceDetails(ServiceMaster service) throws GenericBusinessException;
 
     // Get categories
     List<Category> getAllCategories() throws GenericBusinessException;
@@ -42,22 +42,22 @@ public interface AdminSvc {
     void addService(ServiceMaster service);
 
     //Get service by Service code and category code
-    ServiceMaster getServiceByCategoryCodeServiceCode(String categoryCode,String serviceCode);
+    ServiceMaster getServiceByCategoryCodeServiceCode(String categoryCode,String serviceCode) throws GenericBusinessException;
 
     //Update Service details
-    void updateService(ServiceMaster cmdService, String categoryCodePresent,String serviceCodePresent);
+    void updateService(ServiceMaster cmdService, String categoryCodePresent,String serviceCodePresent) throws GenericBusinessException;
 
     //Delete Service of particular Category using categoryCode and serviceCode
-    void deleteService(String categoryCode, String serviceCode);
+    void deleteService(String categoryCode, String serviceCode) throws GenericBusinessException;
 
     // get all services of all categories
-    List<ServiceMaster> getAllServices();
+    List<ServiceMaster> getAllServices() throws GenericBusinessException;
 
     //Get Master Services for a Given categoryCode
-    List<ServiceMaster> getMasterServices(Integer categoryCode);
+    List<ServiceMaster> getMasterServices(Integer categoryCode) throws GenericBusinessException;
 
     //Enable or Disable a Country default Holiday
-    void enableDisableHoliday(String countryCode, String holidayDt);
+    void enableDisableHoliday(String countryCode, String holidayDt) throws GenericBusinessException;
 
     //Check if the default Holiday to be added already exists
     Integer checkDefaultHoliday(String countryCode, String holidayDt);
@@ -66,10 +66,10 @@ public interface AdminSvc {
     Holiday addDefaultHoliday(Holiday holiday);
 
     //Get default Holiday by Holiday Date and CountryCode
-    Holiday getHolidayByDateAndCountry(String countryCode, String holidayDt);
+    Holiday getHolidayByDateAndCountry(String countryCode, String holidayDt) throws GenericBusinessException;
 
     //Update default Holiday detail
-    void updateDefaultHoliday(Holiday cmdHoliday, String countryCode, String holidayDt);
+    void updateDefaultHoliday(Holiday cmdHoliday, String countryCode, String holidayDt) throws GenericBusinessException;
 
     //Get all Master Countries
     List<Country> getAllCountries() throws GenericBusinessException;
@@ -90,7 +90,7 @@ public interface AdminSvc {
     Country getCountryByCountryCode(String countryCodePresent) throws GenericBusinessException;
 
     //Update Country details
-    void updateCountry(Country cmdCountry, String countryCodePresent);
+    void updateCountry(Country cmdCountry, String countryCodePresent) throws GenericBusinessException;
 
     //Delete Country using Country code
     void deleteCountry(String countryCode);
@@ -108,13 +108,13 @@ public interface AdminSvc {
     void addState(State state);
 
     //Get state by State code and country code
-    State getStateByCountryCodeStateCode(String countryCode,String stateCode);
+    State getStateByCountryCodeStateCode(String countryCode,String stateCode) throws GenericBusinessException;
 
     //Update State details
-    void updateState(State cmdState, String countryCodePresent,String stateCodePresent);
+    void updateState(State cmdState, String countryCodePresent,String stateCodePresent) throws GenericBusinessException;
 
     //Activate or De-activate a Business
-    void enableDisableBusiness(Integer bizId);
+    void enableDisableBusiness(Integer bizId) throws GenericBusinessException;
 
     // get the featured business list to admin
     List<Business> getFeaturedBusinesses();
@@ -153,7 +153,7 @@ public interface AdminSvc {
     String getExpiryDate(Integer userId);
 
     //Upgrade User (Change User Role)
-    void upgradeUser(Integer userId);
+    void upgradeUser(Integer userId) throws GenericBusinessException;
 
     // get list of users by email id
     OnskedList getUsersByEmailId(String searchElement,int pageSize,int pageNo,String sortBy,String sort);
