@@ -59,7 +59,7 @@ public class AdminSvcImpl implements AdminSvc {
             categoryRepository.save(categoryEntity);
         }else{
             log.debug("categoryCode does not exist.");
-            throw new GenericBusinessException("category does not exist.");
+            throw new GenericBusinessException("category does not exist");
         }
     }
 
