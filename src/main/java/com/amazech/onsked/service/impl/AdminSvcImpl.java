@@ -349,10 +349,6 @@ public class AdminSvcImpl implements AdminSvc {
         return countries.size();
     }
 
-    @Override
-    public Integer checkState(State state) {
-        return null;
-    }
 
     @Override
     public void addCountry(Country country) {
@@ -390,16 +386,6 @@ public class AdminSvcImpl implements AdminSvc {
     public void deleteCountry(String countryCode) {
         log.debug("Before calling method deleteCountry()");
         countryRepository.deleteById(countryCode);
-    }
-
-    @Override
-    public OnskedList getAllStatesBySort(int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
-    }
-
-    @Override
-    public OnskedList getCountryStates(String countryCode, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
     }
 
     @Override
@@ -462,6 +448,35 @@ public class AdminSvcImpl implements AdminSvc {
         else
             throw new GenericBusinessException("businessId "+bizId+" does not exist.");
 
+    }
+
+    @Override
+    public void upgradeUser(Integer userId) throws GenericBusinessException {
+        log.debug("Before calling upgradeUser()");
+        Optional<UserRoleEntity> value = userRoleRepository.findById(userId);
+        if(value.isPresent()){
+            log.debug("Upgrading user");
+            UserRoleEntity userRoleEntity = value.get();
+            userRoleEntity.setRoleCode("BIZADMIN");
+            userRoleRepository.save(userRoleEntity);
+        }
+        else
+            throw new GenericBusinessException("User id does not exist");
+    }
+
+    @Override
+    public void updateOnskedUsers(String userId) {
+        log.debug("Before calling method updateOnskedUsers()");
+        Optional<UserEntity> value = userRepository.findById(Integer.parseInt(userId));
+        if(value.isPresent()){
+            log.debug("Updating user");
+            UserEntity userEntity = value.get();
+            if(userEntity.getIsActive().equalsIgnoreCase("Y"))
+                userEntity.setIsActive("N");
+            else
+                userEntity.setIsActive("Y");
+            userRepository.save(userEntity);
+        }
     }
 
     @Override
@@ -530,20 +545,6 @@ public class AdminSvcImpl implements AdminSvc {
     }
 
     @Override
-    public void upgradeUser(Integer userId) throws GenericBusinessException {
-        log.debug("Before calling upgradeUser()");
-        Optional<UserRoleEntity> value = userRoleRepository.findById(userId);
-        if(value.isPresent()){
-            log.debug("Upgrading user");
-            UserRoleEntity userRoleEntity = value.get();
-            userRoleEntity.setRoleCode("BIZADMIN");
-            userRoleRepository.save(userRoleEntity);
-        }
-        else
-            throw new GenericBusinessException("User id does not exist");
-    }
-
-    @Override
     public OnskedList getUsersByEmailId(String searchElement, int pageSize, int pageNo, String sortBy, String sort) {
         return null;
     }
@@ -574,21 +575,6 @@ public class AdminSvcImpl implements AdminSvc {
     }
 
     @Override
-    public void updateOnskedUsers(String userId) {
-        log.debug("Before calling method updateOnskedUsers()");
-        Optional<UserEntity> value = userRepository.findById(Integer.parseInt(userId));
-        if(value.isPresent()){
-            log.debug("Updating user");
-            UserEntity userEntity = value.get();
-            if(userEntity.getIsActive().equalsIgnoreCase("Y"))
-                userEntity.setIsActive("N");
-            else
-                userEntity.setIsActive("Y");
-            userRepository.save(userEntity);
-        }
-    }
-
-    @Override
     public Integer checkStateExist(String countryCode) {
         return null;
     }
@@ -597,4 +583,20 @@ public class AdminSvcImpl implements AdminSvc {
     public Integer checkAppointmentExists(String countryCode, String holidayDt) {
         return null;
     }
+
+    @Override
+    public Integer checkState(State state) {
+        return null;
+    }
+
+    @Override
+    public OnskedList getAllStatesBySort(int pageSize, int pageNo, String sortBy, String sort) {
+        return null;
+    }
+
+    @Override
+    public OnskedList getCountryStates(String countryCode, int pageSize, int pageNo, String sortBy, String sort) {
+        return null;
+    }
+
 }
