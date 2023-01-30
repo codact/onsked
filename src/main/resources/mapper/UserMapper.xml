@@ -1,0 +1,1195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amazech.onsked.dao.mapper.UserMapper">
+    <resultMap id="result" type="user">
+        <result property="userId" column="user_id"/>
+        <result property="email" column="email"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="stateName" column="state_name"/>
+        <result property="countryName" column="country_name"/>
+        <result property="gender" column="gender"/>
+        <result property="dateOfBirth" column="date_of_birth"/>
+        <result property="addressLine1" column="address_line1"/>
+        <result property="addressLine2" column="address_line2"/>
+        <result property="city" column="city"/>
+        <result property="stateCode" column="state_code"/>
+        <result property="zipCode" column="zip_code"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="timeZoneCode" column="timezone_code"/>
+        <result property="timezone" column="timezone"/>
+        <result property="cellPhone" column="cell_phone"/>
+        <result property="homePhone" column="home_phone"/>
+        <result property="workPhone" column="work_phone"/>
+        <result property="workPhoneExt" column="work_phone_ext"/>
+        <result property="isVerified" column="is_verified"/>
+        <result property="verificationDt" column="verification_dt"/>
+        <result property="isActive" column="is_active"/>
+        <result property="lastLoginDt" column="last_login_dt"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="modifiedDt" column="modified_dt"/>
+        <result property="securityQuestion1" column="security_question1"/>
+        <result property="securityQuestion2" column="security_question2"/>
+        <result property="answer1" column="answer1"/>
+        <result property="answer2" column="answer2"/>
+        <result property="roleCode" column="role_code"/>
+
+
+    </resultMap>
+
+    <resultMap id="unregisteredUserResult" type="unregisteredUser">
+        <result property="email" column="email"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="gender" column="gender"/>
+        <result property="dateOfBirth" column="date_of_birth"/>
+        <result property="addressLine1" column="address_line1"/>
+        <result property="addressLine2" column="address_line2"/>
+        <result property="city" column="city"/>
+        <result property="stateCode" column="state_code"/>
+        <result property="zipCode" column="zip_code"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="timeZoneCode" column="timezone_code"/>
+        <result property="cellPhone" column="cell_phone"/>
+        <result property="homePhone" column="home_phone"/>
+    </resultMap>
+
+    <resultMap id="userBusiness" type="business">
+        <result property="bizId" column="biz_id"/>
+    </resultMap>
+
+    <resultMap id="paymentResult" type="payment">
+        <result property="userId" column="user_id"/>
+        <result property="cardHolderName" column="card_holder_name"/>
+        <result property="creditCardType" column="credit_card_type"/>
+        <result property="creditCardNumber" column="credit_card_number"/>
+        <result property="securityCode" column="security_code"/>
+        <result property="cardExpiryDate" column="card_expiry_date"/>
+    </resultMap>
+
+    <resultMap id="userRoleResult" type="userRole">
+        <result property="userId" column="user_id"/>
+        <result property="roleCode" column="role_code"/>
+    </resultMap>
+
+    <resultMap id="securityQuestionResult" type="securityQuestion">
+        <result property="questionId" column="question_id"/>
+        <result property="question" column="question"/>
+    </resultMap>
+
+    <resultMap id="userMailResult" type="userMail">
+        <result property="userId" column="user_id"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="email" column="email"/>
+        <result property="cellPhone" column="mobile_number"/>
+        <result property="password" column="password"/>
+        <result property="activated" column="activated"/>
+        <result property="verificationCode" column="verification_code"/>
+        <result property="registrationDate" column="registration_dt"/>
+        <result property="activationDate" column="activation_dt"/>
+        <result property="verificationType" column="verification_type"/>
+    </resultMap>
+
+    <resultMap id="timeZoneResult" type="timeZone">
+        <result property="timeZoneCode" column="timezone_code"/>
+        <result property="description" column="description"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="timeZone" column="timezone"/>
+    </resultMap>
+
+    <resultMap id="upgradeOptionsResult" type="upgradeOptions">
+        <result property="levelId" column="level_id"/>
+        <result property="levelDesc" column="level_desc"/>
+        <result property="levelTitle" column="level_title"/>
+        <result property="cost" column="cost"/>
+        <result property="periodYears" column="period_years"/>
+        <result property="periodMonths" column="period_months"/>
+        <result property="periodDays" column="period_days"/>
+        <result property="limitResources" column="limit_resources"/>
+        <result property="limitBusinesses" column="limit_businesses"/>
+        <result property="limitLocations" column="limit_locations"/>
+    </resultMap>
+
+    <resultMap id="businessResult1" type="business">
+        <result property="bizId" column="biz_id"/>
+        <result property="bizName" column="biz_name"/>
+        <result property="description" column="description"/>
+        <result property="categoryCode" column="category_code"/>
+        <result property="contactFirstName" column="contact_first_name"/>
+        <result property="contactLastName" column="contact_last_name"/>
+        <result property="contactEmail" column="contact_email"/>
+        <result property="contactPhone" column="contact_phone"/>
+        <result property="website" column="website"/>
+        <result property="isActive" column="is_active"/>
+        <result property="isSearchable" column="is_searchable"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="modifiedDt" column="modified_dt"/>
+        <result property="modifiedBy" column="modified_by"/>
+    </resultMap>
+
+    <resultMap id="businessResultForResource" type="business">
+        <result property="bizId" column="biz_id"/>
+        <result property="displayCounter" column="display_counter"/>
+        <result property="bizName" column="biz_name"/>
+    </resultMap>
+
+    <resultMap id="locationResultForResource" type="location">
+        <result property="locId" column="loc_id"/>
+        <result property="bizId" column="biz_id"/>
+    </resultMap>
+
+    <resultMap id="userPaymentsResult" type="userPayments">
+        <result property="paymentId" column="payment_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="confirmationNumber" column="confirmation_number"/>
+        <result property="paymentMode" column="payment_mode"/>
+        <result property="gatewayTransactionId" column="gateway_transaction_id"/>
+        <result property="amount" column="amount"/>
+        <result property="paymentDt" column="payment_dt"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="additionalDetails" column="additional_details"/>
+        <result property="mode" column="mode"/>
+        <result property="limitResources" column="limit_resources"/>
+    </resultMap>
+
+    <resultMap id="paymentModesResult" type="paymentModes">
+        <result property="modeId" column="mode_id"/>
+        <result property="mode" column="mode"/>
+        <result property="isActive" column="is_active"/>
+    </resultMap>
+
+    <resultMap id="userResult" type="user">
+        <result property="userId" column="user_id"/>
+        <result property="email" column="email"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="isActive" column="is_active"/>
+        <result property="roleCode" column="role_code"/>
+    </resultMap>
+
+    <resultMap id="acctPaymentHistory" type="paymentHistory">
+        <result property="levelId" column="level_id"/>
+        <result property="packageName" column="package_name"/>
+        <result property="amount" column="amount"/>
+        <result property="paymentDt" column="payment_dt"/>
+        <result property="expiryDt" column="expiry_dt"/>
+        <result property="levelDesc" column="level_desc"/>
+        <result property="limitAppointments" column="limit_appointments"/>
+        <result property="limitLocations" column="limit_locations"/>
+        <result property="limitResources" column="limit_resources"/>
+        <result property="limitBusinesses" column="limit_businesses"/>
+        <result property="periodYears" column="period_years"/>
+        <result property="periodMonths" column="period_months"/>
+        <result property="periodDays" column="period_days"/>
+        <result property="paymentMode" column="payment_mode"/>
+        <result property="duration" column="duration"/>
+    </resultMap>
+
+    <resultMap id="paymentPackageDetails" type="paymentHistory">
+        <result property="levelId" column="level_id"/>
+        <result property="packageName" column="package_name"/>
+        <result property="levelDesc" column="level_desc"/>
+        <result property="limitAppointments" column="limit_appointments"/>
+        <result property="limitLocations" column="limit_locations"/>
+        <result property="limitResources" column="limit_resources"/>
+        <result property="limitBusinesses" column="limit_businesses"/>
+        <result property="periodYears" column="period_years"/>
+        <result property="periodMonths" column="period_months"/>
+        <result property="periodDays" column="period_days"/>
+        <result property="amount" column="amount"/>
+    </resultMap>
+
+    <resultMap id="result1" type="user">
+        <result property="userId" column="user_id"/>
+        <result property="email" column="email"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="gender" column="gender"/>
+        <result property="dateOfBirth" column="date_of_birth"/>
+        <result property="addressLine1" column="address_line1"/>
+        <result property="addressLine2" column="address_line2"/>
+        <result property="city" column="city"/>
+        <result property="stateCode" column="state_code"/>
+        <result property="zipCode" column="zip_code"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="timeZoneCode" column="timezone_code"/>
+        <result property="timezone" column="timezone"/>
+        <result property="cellPhone" column="cell_phone"/>
+        <result property="homePhone" column="home_phone"/>
+        <result property="workPhone" column="work_phone"/>
+        <result property="workPhoneExt" column="work_phone_ext"/>
+        <result property="isVerified" column="is_verified"/>
+        <result property="verificationDt" column="verification_dt"/>
+        <result property="isActive" column="is_active"/>
+        <result property="lastLoginDt" column="last_login_dt"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="modifiedDt" column="modified_dt"/>
+        <result property="securityQuestion1" column="security_question1"/>
+        <result property="securityQuestion2" column="security_question2"/>
+        <result property="answer1" column="answer1"/>
+        <result property="answer2" column="answer2"/>
+        <result property="roleCode" column="role_code"/>
+        <result property="levelTitle" column="level_title"/>
+        <result property="periodYears" column="period_years"/>
+        <result property="periodMonths" column="period_months"/>
+        <result property="periodDays" column="period_days"/>
+        <result property="limitAppointments" column="limit_appointments"/>
+        <result property="limitLocations" column="limit_locations"/>
+        <result property="limitResources" column="limit_resources"/>
+        <result property="limitBusinesses" column="limit_businesses"/>
+        <result property="paymentDt" column="payment_dt"/>
+        <result property="levelId" column="level_id"/>
+        <result property="roleCode" column="role_code"/>
+    </resultMap>
+
+    <resultMap id="acctPaymentHistory1" type="paymentHistory">
+        <result property="levelId" column="level_id"/>
+        <result property="packageName" column="package_name"/>
+        <result property="amount" column="amount"/>
+        <result property="paymentDt" column="payment_dt"/>
+        <result property="expiryDt" column="expiry_dt"/>
+        <result property="levelDesc" column="level_desc"/>
+        <result property="limitAppointments" column="limit_appointments"/>
+        <result property="limitLocations" column="limit_locations"/>
+        <result property="limitResources" column="limit_resources"/>
+        <result property="limitBusinesses" column="limit_businesses"/>
+        <result property="periodYears" column="period_years"/>
+        <result property="periodMonths" column="period_months"/>
+        <result property="periodDays" column="period_days"/>
+    </resultMap>
+
+    <resultMap id="businessResult" type="business">
+        <result property="bizId" column="biz_id"/>
+        <result property="bizName" column="biz_name"/>
+    </resultMap>
+
+    <resultMap id="userInfo" type="user">
+        <result property="city" column="city"/>
+        <result property="stateName" column="state_name"/>
+        <result property="addressLine1" column="address_line1"/>
+        <result property="countryName" column="country_name"/>
+        <result property="zipCode" column="zip_code"/>
+    </resultMap>
+
+    <resultMap id="pinResult" type="client">
+        <result property="email" column="email"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="cellPhone" column="cell_phone"/>
+        <result property="onskedPin" column="onsked_pin"/>
+        <result property="notifyBySMS" column="notify_by_SMS"/>
+        <result property="bizName" column="biz_name"/>
+        <result property="bizId" column="biz_id"/>
+    </resultMap>
+
+    <insert id="addUserMail">
+        INSERT INTO usertable
+        (user_id,
+        first_name,
+        last_name,
+        email,
+        password,
+        activated,
+        verification_code,
+        registration_dt,
+        activation_dt,
+        last_login_date,
+        verification_type,
+        mobile_number,
+        sms_verification_code)
+        VALUES(
+        #userId#,
+        #firstName#,
+        #lastName#,
+        #email#,
+        SHA1(#password#),
+        #activated#,
+        #verificationCode#,
+        UTC_TIMESTAMP(),
+        #activationDate#,
+        #lastLoginDate#,
+        #verificationType#,
+        #cellPhone#,
+        #smsVerificationCode#
+        )
+    </insert>
+
+    <insert id="addUnregisteredUserDetails">
+        INSERT INTO unregistered_user_master
+        (first_name,
+        last_name,
+        gender,
+        date_of_birth,
+        email,
+        address_line1,
+        address_line2,
+        city,
+        state_code,
+        zip_code,
+        country_code,
+        timezone_code,
+        cell_phone,
+        home_phone)
+        VALUES(
+        #firstName#,
+        #lastName#,
+        #gender#,
+        #dateOfBirthAsYYYYMMDD#,
+        #email#,
+        #addressLine1#,
+        #addressLine2#,
+        #city#,
+        #stateCode#,
+        #zipCode#,
+        #countryCode#,
+        #timeZoneCode#,
+        #cellPhone#,
+        #homePhone#
+        )
+
+        <selectKey resultType="java.lang.Integer" keyProperty="unregId">
+            select last_insert_id() as unregId
+        </selectKey>
+
+    </insert>
+
+
+    <update id="updateUserMail">
+        update usertable
+        set
+        first_name=#firstName#,
+        last_name=#lastName#,
+        email=#email#,
+        password=#password#,
+        activated=#activated#,
+        verification_code=#verificationCode#,
+        registration_dt=UTC_TIMESTAMP(),
+        activation_dt=#activationDate#,
+        last_login_date=UTC_TIMESTAMP()
+        where user_id=#userId#
+    </update>
+
+    <update id="activateUserMail">
+        update usertable
+        set
+        activated='1',
+        activation_dt=UTC_TIMESTAMP()
+        where verification_code=#verHash#
+    </update>
+
+    <update id="activateUserMailMaster">
+        update user_master
+        set
+        is_verified='Y',
+        verification_dt=UTC_TIMESTAMP(),
+        modified_dt = UTC_TIMESTAMP()
+        where user_id=#userId#
+    </update>
+
+
+
+    <select id="getUserByEmailAndPassword" resultMap="result">
+        select
+        user_master.user_id,
+        user_master.email,
+        user_master.first_name,
+        s.state_name as state_name,
+        c.country_name as country_name,
+        user_master.last_name,
+        user_master.gender,
+        date_format(user_master.date_of_birth,'%m/%d/%Y') as date_of_birth,
+        user_master.address_line1,
+        user_master. address_line2,
+        user_master.city,
+        user_master.state_code,
+        user_master.zip_code,
+        user_master.country_code,
+        user_master.timezone_code,
+        t.timezone as timezone,
+        user_master.cell_phone,
+        user_master.home_phone,
+        user_master.work_phone,
+        user_master.work_phone_ext,
+        user_master.is_verified,
+        user_master.verification_dt,
+        user_master.is_active,
+        user_master.last_login_dt,
+        user_master.created_dt,
+        user_master.modified_dt,
+        user_master.security_question1,
+        user_master.security_question2,
+        user_master.answer1,
+        user_master.answer2,
+        user_role.role_code as role_code
+        from user_master inner join user_role on user_master.user_id = user_role.user_id
+        join state s on user_master.state_code = s.state_code and user_master.country_code = s.country_code
+        join country c on user_master.country_code = c.country_code
+        left join timezone t on user_master.timezone_code = t.timezone_code
+        where email = #email#
+        and password = sha1(#password#)
+    </select>
+
+    <select id="getUserByfbEmail" resultMap="result">
+        select
+        user_master.user_id,
+        user_master.email,
+        user_master.first_name,
+        s.state_name as state_name,
+        c.country_name as country_name,
+        user_master.last_name,
+        user_master.gender,
+        date_format(user_master.date_of_birth,'%m/%d/%Y') as date_of_birth,
+        user_master.address_line1,
+        user_master. address_line2,
+        user_master.city,
+        user_master.state_code,
+        user_master.zip_code,
+        user_master.country_code,
+        user_master.timezone_code,
+        t.timezone as timezone,
+        user_master.cell_phone,
+        user_master.home_phone,
+        user_master.work_phone,
+        user_master.work_phone_ext,
+        user_master.is_verified,
+        user_master.verification_dt,
+        user_master.is_active,
+        user_master.last_login_dt,
+        user_master.created_dt,
+        user_master.modified_dt,
+        user_master.security_question1,
+        user_master.security_question2,
+        user_master.answer1,
+        user_master.answer2,
+        user_role.role_code as role_code
+        from user_master inner join user_role on user_master.user_id = user_role.user_id
+        join state s on user_master.state_code = s.state_code and user_master.country_code = s.country_code
+        join country c on user_master.country_code = c.country_code
+        left join timezone t on user_master.timezone_code = t.timezone_code
+        where email = #email#
+    </select>
+
+    <select id="getUserByUserId" resultMap="result">
+        select
+        user_master.user_id,
+        user_master.email,
+        user_master.first_name,
+        user_master.last_name,
+        user_master.gender,
+        s.state_name as state_name,
+        c.country_name as country_name,
+        date_format(user_master.date_of_birth,'%m/%d/%Y') as date_of_birth,
+        user_master.address_line1,
+        user_master. address_line2,
+        user_master.city,
+        user_master.state_code,
+        user_master.zip_code,
+        user_master.country_code,
+        user_master.timezone_code,
+        t.timezone as timezone,
+        user_master.cell_phone,
+        user_master.home_phone,
+        user_master.work_phone,
+        user_master.work_phone_ext,
+        user_master.is_verified,
+        user_master.verification_dt,
+        user_master.is_active,
+        user_master.last_login_dt,
+        user_master.created_dt,
+        user_master.modified_dt,
+        user_master.security_question1,
+        user_master.security_question2,
+        user_master.answer1,
+        user_master.answer2,
+        user_role.role_code as role_code from user_master
+        inner join user_role on user_master.user_id = user_role.user_id
+        join state s on user_master.state_code = s.state_code and user_master.country_code = s.country_code
+        join country c on user_master.country_code = c.country_code
+        left join timezone t on user_master.timezone_code = t.timezone_code
+        where user_master.user_id = #userId# group by user_id ;
+    </select>
+
+
+
+    <insert id="addUser">
+        insert into user_master(
+        user_id,
+        email,
+        password,
+        first_name,
+        last_name,
+        gender,
+        date_of_birth,
+        address_line1,
+        address_line2,
+        city,
+        state_code,
+        zip_code,
+        country_code,
+        timezone_code,
+        cell_phone,
+        home_phone,
+        work_phone,
+        work_phone_ext,
+        verification_code,
+        is_verified,
+        verification_dt,
+        is_active,
+        last_login_dt,
+        created_dt,
+        modified_dt,
+        answer1,
+        answer2,
+        is_terms_accepted,
+        security_question1,
+        security_question2,
+        appointment_last_sync,
+        login_attempts,
+        last_login_attempt,
+        blocked_until)
+        values(
+        null,
+        #email#,
+        SHA1(#password#),
+        #firstName#,
+        #lastName#,
+        #gender#,
+        #dateOfBirthAsYYYYMMDD#,
+        #addressLine1#,
+        #addressLine2#,
+        #city#,
+        #stateCode#,
+        #zipCode#,
+        #countryCode#,
+        #timeZoneCode#,
+        #cellPhone#,
+        #homePhone#,
+        #workPhone#,
+        #workPhoneExt#,
+        #verificationCode#,
+        #isVerified#,
+        #verificationDt#,
+        #isActive#,
+        UTC_TIMESTAMP(),
+        UTC_TIMESTAMP(),
+        UTC_TIMESTAMP(),
+        #answer1#,
+        #answer2#,
+        #acceptTerms#,
+        #securityQuestion1#,
+        #securityQuestion2#,
+        UTC_TIMESTAMP(),
+        "0",
+        null,
+        null);
+        <selectKey resultType="java.lang.Integer" keyProperty="userId">
+            select last_insert_id() as user_id
+        </selectKey>
+    </insert>
+
+    <update id="updateUser">
+        update user_master
+        set first_name = #firstName#,
+        last_name = #lastName#,
+        gender = #gender#,
+        date_of_birth = #dateOfBirthAsYYYYMMDD#,
+        address_line1 = #addressLine1#,
+        address_line2 = #addressLine2#,
+        city = #city#,
+        state_code = #stateCode#,
+        zip_code = #zipCode#,
+        country_code = #countryCode#,
+        timezone_code = #timeZoneCode#,
+        cell_phone = #cellPhone#,
+        home_phone = #homePhone#,
+        work_phone = #workPhone#,
+        work_phone_ext = #workPhoneExt#,
+        modified_dt = UTC_TIMESTAMP()
+        where user_id = #userId#
+    </update>
+
+    <update id="updatePassword">
+        update user_master
+        set password = SHA1(#password#),
+        modified_dt = UTC_TIMESTAMP()
+        where user_id = #userId#
+    </update>
+
+    <insert id="addUserRole">
+        insert into user_role(
+        user_id,
+        role_code)
+        values(
+        #userId#,
+        "USER");
+    </insert>
+
+    <select id="getPaymentDetailsByUserId" resultMap="paymentResult">
+        select
+        user_id,
+        card_holder_name,
+        credit_card_type,
+        credit_card_number,
+        security_code,
+        card_expiry_date,
+        card_issuing_bank,
+        card_issuing_country
+        where user_id = #userId#
+    </select>
+
+    <select id="getUserMailDetailsByUserId" resultMap="userMailResult">
+        select
+        user_id,
+        first_name,
+        last_name,
+        email,
+        password,
+        activated,
+        verification_code,
+        registration_dt,
+        activation_dt,
+        verification_type,
+        mobile_number
+        from usertable
+        where user_id = #userId#
+    </select>
+
+    <select id="getUserMailDetailsByVerCode" resultMap="userMailResult">
+        select
+        user_id,
+        first_name,
+        last_name,
+        email,
+        password,
+        activated,
+        verification_code,
+        registration_dt,
+        activation_dt,
+        verification_type,
+        mobile_number
+        from usertable
+        where verification_code = #verificationCode#
+    </select>
+
+    <insert id="addPremiumUserDetails">
+        insert into user_premium_details(
+        user_id,
+        card_holder_name,
+        credit_card_type,
+        credit_card_number,
+        security_code,
+        card_expiry_date,
+        card_issuing_bank,
+        card_issuing_country)
+        values(
+        #userId#,
+        #cardHolderName#,
+        #creditCardType#,
+        #creditCardNumber#,
+        #securityCode#,
+        #cardExpiryDateAsYYYYMMDD#,
+        #cardIssuingBank#,
+        #cardIssuingCountry#);
+    </insert>
+
+    <update id="upgradeUser">
+        update user_role
+        set role_code = "BIZADMIN"
+        where user_id = #userId#
+    </update>
+
+    <update id="updateUserLoginDt">
+        update user_master
+        set last_login_dt = UTC_TIMESTAMP()
+        where user_id = #userId#
+    </update>
+
+    <select id="getUserRoleByUserId" resultMap="userRoleResult">
+        select
+        user_id,
+        role_code
+        from user_role
+        where user_id = #userId#
+    </select>
+
+    <select id="getLastInsertId" resultType="java.lang.Integer">
+        select last_insert_id() as id;
+    </select>
+
+    <select id="getLastUserId" resultType="java.lang.Integer">
+        select max(user_id) as id from user_master;
+    </select>
+
+    <select id="getAllSecurityQuestions" resultMap="securityQuestionResult">
+        select
+        question_id,
+        question
+        from user_security_questions
+    </select>
+
+    <!-- ************************************************************************ -->
+
+    <select id="getRandomUserSecurityQuestion" resultMap="securityQuestionResult">
+        (SELECT user_security_questions.*
+        FROM user_security_questions inner join user_master
+        on user_security_questions.question_id = user_master.security_question1
+        where user_master.email = #email#)
+        union
+        (SELECT user_security_questions.*
+        FROM user_security_questions inner join user_master
+        on user_security_questions.question_id = user_master.security_question2
+        where user_master.email = #email#)
+        ORDER BY RAND()LIMIT 1;
+    </select>
+
+    <select id="getTimeZonesByCountryCode" resultMap="timeZoneResult">
+        select
+        timezone_code,
+        description,
+        country_code,
+        timezone
+        from timezone
+        where is_active = 'Y' and country_code=#countryCode#
+    </select>
+
+    <select id="getUpgradeOptions" resultMap="upgradeOptionsResult">
+        select
+        level_id,
+        level_title,
+        level_desc,
+        cost,
+        period_years,
+        period_months,
+        period_days,
+        limit_resources,
+        limit_businesses,
+        limit_locations
+        from user_upgrade_levels
+        where is_active = 'Y';
+    </select>
+
+    <insert id="addPaymentDetailsForUpgaradeUser">
+        insert into user_payments(
+        payment_id,
+        user_id,
+        level_id,
+        confirmation_number,
+        payment_mode,
+        gateway_transaction_id,
+        amount,
+        payment_dt,
+        created_dt,
+        package_expiry_dt,
+        additional_details)
+        values(
+        null,
+        #userId#,
+        #levelId#,
+        #confirmationNumber#,
+        #paymentMode#,
+        #gatewayTransactionId#,
+        #amount#,
+        UTC_TIMESTAMP(),
+        UTC_TIMESTAMP(),
+        DATE_ADD( #packageExpiryDate#, INTERVAL 1 month ),
+        #additionalDetails#);
+    </insert>
+
+    <select id="getLatestRegisteredBusiness" resultMap="businessResult1">
+        select
+        biz_id,
+        biz_name,
+        description,
+        category_code,
+        contact_first_name,
+        contact_last_name,
+        contact_email,
+        contact_phone,
+        website,
+        is_active,
+        is_searchable,
+        created_dt,
+        created_by,
+        modified_dt,
+        modified_by
+        from business where is_active = 'Y' order by created_dt desc limit 5;
+    </select>
+
+    <select id="getPaymentModes" resultMap="paymentModesResult">
+        select
+        mode_id,
+        mode,
+        is_active
+        from payment_modes where is_active = 'Y';
+    </select>
+
+    <select id="getUserPaymentDetails" resultMap="userPaymentsResult">
+        select
+        user_payments.payment_id as payment_id,
+        user_payments.user_id,
+        user_payments.level_id,
+        user_payments.confirmation_number,
+        user_payments.amount,
+        user_payments.payment_dt,
+        user_payments.created_dt,
+        user_payments.payment_mode,
+        user_payments.gateway_transaction_id,
+        user_payments.additional_details,
+        payment_modes.mode,
+        user_upgrade_levels.limit_resources
+        from user_payments inner join payment_modes on payment_modes.mode_id = user_payments.payment_mode
+        join user_upgrade_levels on user_upgrade_levels.level_id = user_payments.level_id
+        where user_payments.payment_id=(select max(user_payments.payment_id) from user_payments) and user_payments.user_id = #userId# group by user_payments.user_id;
+    </select>
+
+    <select id="checkEmailId" resultType="java.lang.Integer">
+        select count(*)
+        from user_master where
+        email = #email#;
+    </select>
+
+    <select id="checkUserSecurityAnswer" resultType="java.lang.Integer">
+        select count(*)
+        from user_master where
+        email = #email# and
+        ((security_question1 = #securityQuestion1# and answer1 = #answer1#) or
+        (security_question2 = #securityQuestion1# and answer2 = #answer1#));
+    </select>
+
+    <select id="getLastLoginTime" resultType="java.sql.Timestamp">
+        select last_login_attempt
+        from user_master where
+        email = #email#;
+    </select>
+
+    <select id="currentFailedAttemptCount" resultType="java.lang.Integer">
+        select login_attempts
+        from user_master where
+        email = #email#;
+    </select>
+
+    <update id="updateFailedAttemptCount">
+        update user_master
+        set login_attempts = login_attempts + '1'
+        where email = #email#
+    </update>
+
+    <update id="resetLoginCounter">
+        update user_master
+        set login_attempts = '0'
+        where user_id = #userId#
+    </update>
+
+    <update id="resetLoginCounterByEmail">
+        update user_master
+        set login_attempts = '0'
+        where email = #email#
+    </update>
+
+    <update id="setFailedLoginCount">
+        update user_master
+        set login_attempts = '3'
+        where email = #email#
+    </update>
+
+    <update id="disableUserAccount">
+        update user_master
+        set is_active = 'N'
+        where email = #email#
+    </update>
+
+    <update id="resetPassword">
+        update user_master
+        set password = SHA1(#password#),
+        login_attempts = 0,
+        modified_dt = utc_timestamp()
+        where email = #email#
+    </update>
+
+    <select id="getUserByEmailId" resultMap="userResult">
+        select
+        user_master.user_id,
+        user_master.email,
+        user_master.first_name,
+        user_master.last_name,
+        user_master.is_active,
+        user_role.role_code as role_code
+        from user_master inner join user_role on user_master.user_id = user_role.user_id
+        where user_master.email = #email# and user_master.is_active = "Y"
+    </select>
+
+    <update id="updateUserRole">
+        update user_role
+        set role_code = #roleCode#
+        where user_id = #userId#
+    </update>
+
+    <select id="getLeftOutBusinessLimitForBusiness" resultType="java.lang.Integer">
+        select ((select user_upgrade_levels.limit_businesses from user_upgrade_levels
+        inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
+        where user_payments.user_id = #userId# and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount!=0))
+        +
+        (select IFNULL((select user_upgrade_levels.limit_businesses from user_upgrade_levels
+        inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
+        where user_payments.user_id = #userId# and cost=0 and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount=0)),0))
+        -
+        (SELECT count(*) FROM business inner join business_user on business.biz_id = business_user.biz_id
+        where business.is_deleted = 'N' and business_user.user_id = #userId#)) as a;
+    </select>
+
+    <select id="getBusinessesForPricing" resultType="java.lang.Integer">
+        SELECT count(*) FROM business inner join business_user on business.biz_id = business_user.biz_id
+        where business.is_deleted = 'N' and business_user.user_id = #userId#;
+    </select>
+
+    <select id="getLeftOutLocationLimitForBusiness" resultType="java.lang.Integer">
+        select ((select user_upgrade_levels.limit_locations from user_upgrade_levels
+        inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
+        where user_payments.user_id = #userId# and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount!=0))
+        +
+        (select IFNULL((select user_upgrade_levels.limit_locations from user_upgrade_levels
+        inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
+        where user_payments.user_id = #userId# and cost=0 and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount=0)),0))
+        -
+        (select ((select count(*) from location inner join business on location.biz_id = business.biz_id
+        join business_user on business.biz_id = business_user.biz_id
+        where  business.is_deleted = 'N' and business_user.user_id = #userId# and location.is_active != 'D')))) as a;
+    </select>
+
+    <select id="getLocationsForPricing" resultType="java.lang.Integer">
+        select count(*) from location inner join business on location.biz_id = business.biz_id
+        join business_user on business.biz_id = business_user.biz_id
+        where  business.is_deleted = 'N' and business_user.user_id = #userId# and location.is_active != 'D';
+    </select>
+
+    <select id="getLeftOutResourceLimitForBusiness" resultType="java.lang.Integer">
+        select ((select user_upgrade_levels.limit_resources from user_upgrade_levels
+        inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
+        where user_payments.user_id = #userId# and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount!=0))
+        +
+        (select IFNULL((select user_upgrade_levels.limit_resources from user_upgrade_levels
+        inner join user_payments on user_payments.level_id = user_upgrade_levels.level_id
+        where user_payments.user_id = #userId# and cost=0 and user_payments.payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId# and amount=0)),0))
+
+        -
+        (select count(*) from resource inner join business_user on resource.biz_id = business_user.biz_id
+        join business b on b.biz_id=resource.biz_id
+        where resource.is_active in('N','Y') and b.is_deleted = 'N' and business_user.user_id = #userId#)) as b;
+    </select>
+
+    <select id="getResourceForPricing" resultType="java.lang.Integer">
+        select count(*) from resource inner join business_user on resource.biz_id = business_user.biz_id
+        join business b on b.biz_id=resource.biz_id
+        where resource.is_active in('N','Y') and b.is_deleted = 'N' and business_user.user_id = #userId#;
+    </select>
+
+    <select id="getLevelId" resultType="java.lang.String">
+        select user_payments.level_id from user_payments join user_upgrade_levels on user_payments.level_id=user_upgrade_levels.level_id
+        and user_payments.payment_id=(select max(payment_id) from user_payments where user_id=#userId#);
+    </select>
+
+
+    <select id="checkBusinessExpiryDate" resultType="java.lang.Integer">
+        select (datediff(DATE_ADD((select package_expiry_dt from user_payments where payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId#) and user_id=#userId#),INTERVAL 1 Month), utc_timestamp()))as x;
+    </select>
+
+    <select id="checkBusinessExpiryDateWithoutAdding" resultType="java.lang.Integer">
+        select (datediff((select package_expiry_dt from user_payments where payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId#) and user_id=#userId#), utc_timestamp()))as x;
+    </select>
+
+    <select id="getBusinessExpiryDate" resultType="java.lang.String">
+        SELECT SUBSTRING(package_expiry_dt, 1, 10) FROM user_payments where payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId#);
+    </select>
+
+    <select id="getIncrementedExpiryDate" resultType="java.lang.String">
+        SELECT SUBSTRING(DATE_ADD(package_expiry_dt,INTERVAL 1 Month),1,10)  FROM user_payments where payment_dt = (select max(payment_dt) as payment_dt from user_payments  where user_id=#userId#);
+    </select>
+
+    <select id="getCountryCallingCode" resultType="java.lang.String">
+        SELECT country_calling_code FROM country where country_code=#countryCode#;
+    </select>
+
+    <select id="getPinDetailsByClientId" resultMap="pinResult">
+        <!-- SELECT email,first_name,last_name,country_code,onsked_pin,cell_phone,notify_by_SMS FROM client where client_id=#clientId#; -->
+        SELECT
+        c.email,
+        c.first_name,
+        c.last_name,
+        c.country_code,
+        c.onsked_pin,
+        c.cell_phone,
+        c.notify_by_SMS,
+        b.biz_name,
+        b.biz_id
+        FROM client c join business b on c.biz_id = b.biz_id
+        where client_id=#clientId#;
+    </select>
+
+    <select id="getPaymentHistory" resultMap="acctPaymentHistory">
+        select user_upgrade_levels.level_id,user_upgrade_levels.level_title as package_name, user_payments.amount as amount,date(user_payments.payment_dt) as payment_dt,DATE_ADD(utc_date(),INTERVAL (select (datediff((select @dt3 as exp_dt from (select @dt1 := DATE_ADD((select payment_dt from user_payments where user_id = #userId#),INTERVAL IFNULL((
+        select user_upgrade_levels.period_years from user_payments inner join user_upgrade_levels on user_payments.level_id = user_upgrade_levels.level_id
+        where user_upgrade_levels.period_years != 0 and user_payments.user_id = #userId#),0) year),
+        @dt2 := DATE_ADD(@dt1,INTERVAL IFNULL((select user_upgrade_levels.period_months from user_payments inner join user_upgrade_levels on user_payments.level_id = user_upgrade_levels.level_id
+        where user_upgrade_levels.period_months != 0 and user_payments.user_id = #userId#),0) month),
+        @dt3 := DATE_ADD(@dt2,INTERVAL IFNULL((select user_upgrade_levels.period_days from user_payments inner join user_upgrade_levels on user_payments.level_id = user_upgrade_levels.level_id
+        where user_upgrade_levels.period_days != 0 and user_payments.user_id = #userId#),0) day)) as exp), utc_timestamp())) as x) day) as expiry_dt,
+        user_upgrade_levels.level_desc as level_desc, user_upgrade_levels.limit_appointments as limit_appointments, user_upgrade_levels.limit_locations as limit_locations, user_upgrade_levels.limit_resources as limit_resources, user_upgrade_levels.limit_businesses as limit_businesses, user_upgrade_levels.period_years as period_years, user_upgrade_levels.period_months as period_months, user_upgrade_levels.period_days as period_days, payment_modes.mode as payment_mode,
+        (select datediff(DATE_ADD(utc_date(),INTERVAL (select (datediff((select @dt3 as exp_dt from (select @dt1 := DATE_ADD((select payment_dt from user_payments where user_id = #userId#),INTERVAL IFNULL((
+        select user_upgrade_levels.period_years from user_payments inner join user_upgrade_levels on user_payments.level_id = user_upgrade_levels.level_id
+        where user_upgrade_levels.period_years != 0 and user_payments.user_id = #userId#),0) year),
+        @dt2 := DATE_ADD(@dt1,INTERVAL IFNULL((select user_upgrade_levels.period_months from user_payments inner join user_upgrade_levels on user_payments.level_id = user_upgrade_levels.level_id
+        where user_upgrade_levels.period_months != 0 and user_payments.user_id = #userId#),0) month),
+        @dt3 := DATE_ADD(@dt2,INTERVAL IFNULL((select user_upgrade_levels.period_days from user_payments inner join user_upgrade_levels on user_payments.level_id = user_upgrade_levels.level_id
+        where user_upgrade_levels.period_days != 0 and user_payments.user_id = #userId#),0) day)) as exp), utc_timestamp())) as x) day),(select payment_dt from user_payments where user_id = #userId#)) as D) as duration
+        from user_payments inner join user_upgrade_levels on user_upgrade_levels.level_id = user_payments.level_id
+        join payment_modes on payment_modes.mode_id = user_payments.payment_mode and user_payments.user_id = #userId#;
+    </select>
+
+    <select id="getPaymentPackageDetails" resultMap="paymentPackageDetails">
+        select level_id,
+        level_title as package_name,
+        level_desc,
+        limit_appointments,
+        limit_locations,
+        limit_resources,
+        limit_businesses,
+        period_years,
+        period_months,
+        period_days,
+        cost as amount
+        from user_upgrade_levels where level_id = #levelId#
+    </select>
+
+    <select id="getUserBusinessUserId" resultMap="userBusiness">
+        SELECT business_user.biz_id FROM business_user inner join business on business.biz_id = business_user.biz_id
+        where business_user.user_id=#userId# and business.is_deleted !="Y";
+    </select>
+
+    <select id="getStaffWorkingBizId" resultMap="businessResultForResource">
+        SELECT business.* from resource
+        join business on business.biz_id = resource.biz_id
+        join user_master on user_master.email = resource.email
+        join user_role on user_master.user_id = user_role.user_id
+        where user_role.role_code = "RESOURCE" and user_master.user_id=#userId# and business.is_deleted !="Y";
+
+    </select>
+
+    <select id="getStaffWorkingLocId" resultMap="locationResultForResource">
+        select l.* from location_to_resource ltr join resource r on r.res_id = ltr.res_id
+        join business b on b.biz_id = r.biz_id
+        join location l on l.biz_id = b.biz_id and l.loc_id = ltr.loc_id
+        join user_master um on um.email = r.email
+        join user_role ur on um.user_id = ur.user_id
+        where um.user_id = #userId# and b.is_deleted !="Y" and ltr.is_active='Y' and l.is_active='Y' and ur.role_code = "RESOURCE";
+
+    </select>
+
+    <select id="getResourceTypeCode" resultType="java.lang.String">
+        SELECT resource.res_role_code from resource
+        join business on business.biz_id = resource.biz_id
+        join user_master on user_master.email = resource.email
+        join user_role on user_master.user_id = user_role.user_id
+        where user_role.role_code = "RESOURCE" and user_master.user_id=#userId# and business.is_deleted !="Y";
+
+    </select>
+
+    <update id="activateBusiness">
+        UPDATE business b join business_user bu on bu.biz_id=b.biz_id SET is_active='Y' where bu.user_id=269 and b.is_deleted='N' and b.is_active='E';
+    </update>
+
+    <select id="getUserPaymentDetailsByUserId" resultMap="result1">
+        select
+        user_master.user_id,
+        user_master.email,
+        user_master.first_name,
+        user_master.last_name,
+        user_master.gender,
+        date_format(user_master.date_of_birth,'%m/%d/%Y') as date_of_birth,
+        user_master.address_line1,
+        user_master.address_line2,
+        user_master.city,
+        user_master.state_code,
+        user_master.zip_code,
+        user_master.country_code,
+        user_master.timezone_code,
+        t.timezone as timezone,
+        user_master.cell_phone,
+        user_master.home_phone,
+        user_master.work_phone,
+        user_master.work_phone_ext,
+        user_master.is_verified,
+        IF(user_master.is_verified = "Y",now(),user_master.verification_dt) as verification_dt,
+        IF(user_master.is_verified = "N", "unverified user", user_role.role_code )  as role_code,
+        user_master.is_active,
+        user_master.last_login_dt,
+        user_master.created_dt,
+        user_master.modified_dt,
+        user_master.security_question1,
+        user_master.security_question2,
+        user_master.answer1,
+        user_master.answer2,
+        ul1.level_title as level_title,
+        ul1.period_years as period_years,
+        ul1.period_months as period_months,
+        ul1.period_days as period_days,
+        ul1.level_id as level_id,
+        ul1.limit_appointments as limit_appointments,
+        ul1.limit_locations as limit_locations,
+        ul1.limit_resources as limit_resources,
+        ul1.limit_businesses as limit_businesses,
+        t1.payment_dt,
+        user_role.role_code
+        from user_master inner join user_role on user_master.user_id = user_role.user_id
+        left  join (select um.user_id as user_id,max(up.payment_id) as payment_id,
+        max(up.payment_dt) as payment_dt
+        from user_master um inner join user_payments up on up.user_id=um.user_id and up.amount!=0
+        join user_upgrade_levels ul on ul.level_id = up.level_id group by um.user_id) as t1 on t1.user_id= user_master.user_id
+        left  join user_payments up2 on up2.payment_dt=t1.payment_dt and up2.payment_id=t1.payment_id
+        left join user_upgrade_levels ul1 on ul1.level_id = up2.level_id
+        left join timezone t on user_master.timezone_code = t.timezone_code
+        where user_master.user_id=#userId#;
+    </select>
+
+    <select id="getUserSubscriptionByUserId" resultMap="acctPaymentHistory1">
+        select ul.level_id,
+        ul.level_title as package_name,
+        ul.level_desc,
+        ul.limit_appointments,
+        ul.limit_resources,
+        ul.limit_locations,
+        ul.limit_businesses,
+        ul.period_years,
+        ul.period_months,
+        ul.period_days,
+        u.amount,
+        u.payment_dt,
+        u.package_expiry_dt as expiry_dt
+        from user_upgrade_levels ul, user_payments u
+        where ul.level_id=u.level_id and u.user_id=#userId# and u.amount !=0 order by u.payment_dt desc ;
+    </select>
+
+    <select id="getActiveBusinesses" resultMap="businessResult">
+        select distinct business.biz_id,
+        business.biz_name
+        from business inner
+        join business_user on business_user.biz_id = business.biz_id and business_user.user_id = #userId#
+        where business.is_active = 'Y' and business.is_deleted != 'Y';
+    </select>
+
+    <select id="getApptUserInfo" resultMap="userInfo">
+        SELECT city, state.state_name, address_line1, country.country_name,zip_code FROM $tableName$
+        inner join state on state.state_code = $tableName$.state_code and state.country_code = $tableName$.country_code
+        join country on country.country_code = $tableName$.country_code
+        where $colName$ = #userId#;
+    </select>
+
+    <select id="getUnregisteredUserDetails" resultMap="unregisteredUserResult">
+        select email, first_name, last_name, gender, date_of_birth, address_line1, address_line2, city, state_code, zip_code, country_code, timezone_code, cell_phone, home_phone
+        from unregistered_user_master
+        where id = #unregId#;
+    </select>
+
+</mapper>
