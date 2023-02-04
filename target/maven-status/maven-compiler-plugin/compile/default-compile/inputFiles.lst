@@ -89,6 +89,7 @@ D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\Purchas
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\SMS.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\Stocks.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\CourseSchedule.java
+D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\controller\UserController.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\ConvertDateTime.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\OnskedApplication.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\UserSession.java
@@ -118,6 +119,7 @@ D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\Payment
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\dao\repo\UserRoleRepository.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\ResourceToService.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\ProductModel.java
+D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\exceptions\DataAccessException.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\GroupPackagePayment.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\PremiumUser.java
 D:\Work\neo-devops-onsked\onsked\src\main\java\com\amazech\onsked\domain\FileUpload.java
