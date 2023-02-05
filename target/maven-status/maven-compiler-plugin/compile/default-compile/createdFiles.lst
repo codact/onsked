@@ -36,6 +36,7 @@ com\amazech\onsked\domain\BusinessHoliday.class
 com\amazech\onsked\domain\Payment.class
 com\amazech\onsked\domain\Service.class
 com\amazech\onsked\dao\entity\Appointment.class
+com\amazech\onsked\controller\UserController.class
 com\amazech\onsked\dao\entity\AppointmentStatus.class
 com\amazech\onsked\domain\CourseMasterMonthday.class
 com\amazech\onsked\dao\entity\AppointmentStatusId.class
@@ -96,6 +97,7 @@ com\amazech\onsked\domain\PackageDetails.class
 com\amazech\onsked\service\impl\AdminSvcImpl.class
 com\amazech\onsked\domain\LocationToResource.class
 com\amazech\onsked\dao\repo\UserRoleRepository.class
+com\amazech\onsked\exceptions\DataAccessException.class
 com\amazech\onsked\dao\repo\AppointmentRepository.class
 com\amazech\onsked\domain\ResourceToService.class
 com\amazech\onsked\domain\GroupPackagePurchase.class
