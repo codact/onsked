@@ -16,8 +16,61 @@
         <typeAlias alias="location" type="com.amazech.onsked.domain.Location"/>
         <typeAlias alias="paymentHistory" type="com.amazech.onsked.domain.PaymentHistory"/>
         <typeAlias alias="client" type="com.amazech.onsked.domain.Client"/>
+        <typeAlias alias="country" type="com.amazech.onsked.domain.Country"/>
+        <typeAlias alias="state" type="com.amazech.onsked.domain.State"/>
+        <typeAlias alias="service" type="com.amazech.onsked.domain.Service"/>
+        <typeAlias alias="locationHours" type="com.amazech.onsked.domain.LocationHours"/>
+        <typeAlias alias="resourceHours" type="com.amazech.onsked.domain.ResourceHours"/>
+        <typeAlias alias="productModel" type="com.amazech.onsked.domain.ProductModel"/>
+        <typeAlias alias="productIssue" type="com.amazech.onsked.domain.ProductIssue"/>
+        <typeAlias alias="resourceCertificate" type="com.amazech.onsked.domain.ResourceCertificate"/>
+        <typeAlias alias="serviceMaster" type="com.amazech.onsked.domain.ServiceMaster"/>
+        <typeAlias alias="resourceRoleType" type="com.amazech.onsked.domain.ResourceRoleType"/>
+        <typeAlias alias="resource" type="com.amazech.onsked.domain.Resource"/>
+        <typeAlias alias="locationToService" type="com.amazech.onsked.domain.LocationToService"/>
+        <typeAlias alias="locationToResource" type="com.amazech.onsked.domain.LocationToResource"/>
+        <typeAlias alias="resourceToService" type="com.amazech.onsked.domain.ResourceToService"/>
+        <typeAlias alias="businessHours" type="com.amazech.onsked.domain.BusinessHours"/>
+        <typeAlias alias="businessHoliday" type="com.amazech.onsked.domain.BusinessHoliday"/>
+        <typeAlias alias="appointmentSchedule" type="com.amazech.onsked.domain.AppointmentSchedule"/>
+        <typeAlias alias="listBusinessCategories" type="com.amazech.onsked.domain.Category"/>
+        <typeAlias alias="holiday" type="com.amazech.onsked.domain.Holiday"/>
+        <typeAlias alias="appointmentRes" type="com.amazech.onsked.domain.AppointmentRes"/>
+        <typeAlias alias="currency" type="com.amazech.onsked.domain.Currency"/>
+        <typeAlias alias="package" type="com.amazech.onsked.domain.Package"/>
+        <typeAlias alias="genCalendar" type="com.amazech.onsked.domain.GenCalendar"/>
+        <typeAlias alias="staff" type="com.amazech.onsked.domain.Staff"/>
+        <typeAlias alias="bookedAppts" type="com.amazech.onsked.domain.BookedAppts"/>
+        <typeAlias alias="leaveReason" type="com.amazech.onsked.domain.LeaveReason"/>
+        <typeAlias alias="client" type="com.amazech.onsked.domain.Client"/>
+        <typeAlias alias="clientReferral" type="com.amazech.onsked.domain.ClientReferral"/>
+        <typeAlias alias="promotion" type="com.amazech.onsked.domain.Promotion"/>
+        <typeAlias alias="materials" type="com.amazech.onsked.domain.Materials"/>
+        <typeAlias alias="matToPkg" type="com.amazech.onsked.domain.MatToPackage"/>
+        <typeAlias alias="purchaseHeader" type="com.amazech.onsked.domain.PurchaseHeader"/>
+        <typeAlias alias="stocks" type="com.amazech.onsked.domain.Stocks"/>
+        <typeAlias alias="purchaseDetails" type="com.amazech.onsked.domain.PurchaseDetails"/>
+        <typeAlias alias="patient" type="com.amazech.onsked.domain.Patient"/>
+        <typeAlias alias="patientIllness" type="com.amazech.onsked.domain.PatientIllness"/>
+        <typeAlias alias="patientInsurance" type="com.amazech.onsked.domain.PatientInsurance"/>
+        <typeAlias alias="clientInsurance" type="com.amazech.onsked.domain.ClientInsurance"/>
+        <typeAlias alias="clientPhysician" type="com.amazech.onsked.domain.ClientPhysician"/>
+        <typeAlias alias="masterIllness" type="com.amazech.onsked.domain.MasterIllness"/>
+        <typeAlias alias="groupPackage" type="com.amazech.onsked.domain.GroupPackage"/>
+        <typeAlias alias="groupPackageOccurence" type="com.amazech.onsked.domain.GroupPackageOccurence"/>
+        <typeAlias alias="course" type="com.amazech.onsked.domain.Course"/>
+        <typeAlias alias="groupPackageAppointment" type="com.amazech.onsked.domain.GroupPackageAppointment"/>
+        <typeAlias alias="serviceListFromOutside" type="com.amazech.onsked.domain.ServiceListFromOutside"/>
+        <typeAlias alias="productHardwareIssue" type="com.amazech.onsked.domain.ProductHardwareIssue"/>
+        <typeAlias alias="productPartsUsed" type="com.amazech.onsked.domain.ProductPartsUsed"/>
+        <typeAlias alias="formStatus" type="com.amazech.onsked.domain.FormStatus"/>
+        <typeAlias alias="appointmentStatus" type="com.amazech.onsked.domain.AppointmentStatus"/>
+        <typeAlias alias="auditTrail" type="com.amazech.onsked.domain.AuditTrail"/>
+        <typeAlias alias="courseSchedule" type="com.amazech.onsked.domain.CourseSchedule"/>
+        <typeAlias alias="timeZones" type="com.amazech.onsked.domain.TimeZones"/>
     </typeAliases>
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/BusinessMapper.xml"/>
     </mappers>
 </configuration>
