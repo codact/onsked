@@ -3,6 +3,7 @@ package com.amazech.onsked.controller;
 import com.amazech.onsked.domain.*;
 import com.amazech.onsked.service.AdminSvc;
 import com.amazech.onsked.service.AppointmentSvc;
+import com.amazech.onsked.util.OnskedList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -425,6 +426,351 @@ public class AdminController {
             log.debug(e.getMessage());
             throw new ResponseStatusException(
                     HttpStatus.EXPECTATION_FAILED, "User updating failed");
+        }
+    }
+
+    @GetMapping("/getFeaturedBusinesses")
+    public ResponseEntity<List<Business>> getFeaturedBusinesses(){
+        try {
+            List<Business> businesses = adminSvc.getFeaturedBusinesses();
+            return new ResponseEntity<>(businesses, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getCategoriesOfSearchElement")
+    public ResponseEntity<OnskedList> getCategoriesOfSearchElement(@RequestParam String searchElement,
+                                                                   @RequestParam int pageSize,
+                                                                   @RequestParam int pageNo,
+                                                                   @RequestParam String sortBy,
+                                                                   @RequestParam String sort){
+        try {
+            OnskedList categories = adminSvc.getCategoriesOfSearchElement(searchElement, pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(categories, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getCountriesOfSearchElement")
+    public ResponseEntity<OnskedList> getCountriesOfSearchElement(@RequestParam String searchElement,
+                                                                   @RequestParam int pageSize,
+                                                                   @RequestParam int pageNo,
+                                                                   @RequestParam String sortBy,
+                                                                   @RequestParam String sort){
+        try {
+            OnskedList countries = adminSvc.getCountriesOfSearchElement(searchElement, pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(countries, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getStatesOfSearchElement")
+    public ResponseEntity<OnskedList> getStatesOfSearchElement(@RequestParam String filterState, @RequestParam String searchElement,
+                                                                  @RequestParam int pageSize,
+                                                                  @RequestParam int pageNo,
+                                                                  @RequestParam String sortBy,
+                                                                  @RequestParam String sort){
+        try {
+            OnskedList state = adminSvc.getStatesOfSearchElement(filterState, searchElement, pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(state, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getHolidaysOfSearchElement")
+    public ResponseEntity<OnskedList> getHolidaysOfSearchElement(@RequestParam String searchElement,
+                                                               @RequestParam int pageSize,
+                                                               @RequestParam int pageNo,
+                                                               @RequestParam String sortBy,
+                                                               @RequestParam String sort){
+        try {
+            OnskedList holiday = adminSvc.getHolidaysOfSearchElement(searchElement, pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(holiday, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @PostMapping("/checkStateIsEditable")
+    public ResponseEntity<Integer> checkStateIsEditable(@RequestParam String countryCode, @RequestParam String stateCode){
+        try {
+            Integer count = adminSvc.checkStateIsEditable(countryCode, stateCode);
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @PostMapping("/markOrRemoveFeaturedBusiness")
+    public ResponseEntity markOrRemoveFeaturedBusiness(@RequestParam Integer bizId, @RequestParam Integer userId){
+        try {
+            adminSvc.markOrRemoveFeaturedBusiness(bizId, userId);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getAllActiveOnskedUsersBySort")
+    public ResponseEntity<OnskedList> getAllActiveOnskedUsersBySort(@RequestParam int pageSize,
+                                                                 @RequestParam int pageNo,
+                                                                 @RequestParam String sortBy,
+                                                                 @RequestParam String sort){
+        try {
+            OnskedList users = adminSvc.getAllActiveOnskedUsersBySort(pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getUpgradeOptionsBySort")
+    public ResponseEntity<OnskedList> getUpgradeOptionsBySort(@RequestParam int pageSize,
+                                                                    @RequestParam int pageNo,
+                                                                    @RequestParam String sortBy,
+                                                                    @RequestParam String sort){
+        try {
+            OnskedList upgradeOptions = adminSvc.getUpgradeOptionsBySort(pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(upgradeOptions, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @PostMapping("/addPaymentDetails")
+    public ResponseEntity addPaymentDetails(@RequestParam Payment payment, @RequestParam String requestPath){
+        try {
+            adminSvc.addPaymentDetails(payment, requestPath);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @PostMapping("/insertSubscription")
+    public ResponseEntity insertSubscription(@RequestParam int userId,
+                                             @RequestParam int numberOfBusiness,
+                                             @RequestParam int numberOfLocation,
+                                             @RequestParam int numberOfResource,
+                                             @RequestParam String requestPath){
+        try {
+            adminSvc.insertSubscription(userId, numberOfBusiness, numberOfLocation, numberOfResource, requestPath);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @PostMapping("/updateExpiryDate")
+    public ResponseEntity updateExpiryDate(@RequestParam String expiryDate,
+                                           @RequestParam Integer userId,
+                                           @RequestParam String requestPath){
+        try {
+            adminSvc.updateExpiryDate(expiryDate, userId, requestPath);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getExpiryDate")
+    public ResponseEntity<String> getExpiryDate(@RequestParam Integer userId){
+        try {
+            String dt = adminSvc.getExpiryDate(userId);
+            return new ResponseEntity<>(dt, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getUsersByEmailId")
+    public ResponseEntity<OnskedList> getUsersByEmailId(@RequestParam String searchElement,
+                                                            @RequestParam int pageSize,
+                                                            @RequestParam int pageNo,
+                                                            @RequestParam String sortBy,
+                                                            @RequestParam String sort){
+        try {
+            OnskedList users = adminSvc.getUsersByEmailId(searchElement, pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getFeaturedBusinessesBySort")
+    public ResponseEntity<OnskedList> getFeaturedBusinessesBySort(@RequestParam int pageSize,
+                                                        @RequestParam int pageNo,
+                                                        @RequestParam String sortBy,
+                                                        @RequestParam String sort){
+        try {
+            OnskedList users = adminSvc.getFeaturedBusinessesBySort(pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(users, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getAllCategoriesBySort")
+    public ResponseEntity<OnskedList> getAllCategoriesBySort(@RequestParam int pageSize,
+                                                                  @RequestParam int pageNo,
+                                                                  @RequestParam String sortBy,
+                                                                  @RequestParam String sort){
+        try {
+            OnskedList categories = adminSvc.getAllCategoriesBySort(pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(categories, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getAllServicesBySort")
+    public ResponseEntity<OnskedList> getAllServicesBySort(@RequestParam int pageSize,
+                                                             @RequestParam int pageNo,
+                                                             @RequestParam String sortBy,
+                                                             @RequestParam String sort){
+        try {
+            OnskedList services = adminSvc.getAllServicesBySort(pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(services, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getMasterServicesBySort")
+    public ResponseEntity<OnskedList> getMasterServicesBySort(@RequestParam Integer categoryCode, @RequestParam int pageSize,
+                                                           @RequestParam int pageNo,
+                                                           @RequestParam String sortBy,
+                                                           @RequestParam String sort){
+        try {
+            OnskedList services = adminSvc.getMasterServicesBySort(categoryCode, pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(services, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getServicesOfSearchElement")
+    public ResponseEntity<OnskedList> getServicesOfSearchElement(@RequestParam Integer filterService,
+                                                                 @RequestParam String searchElement,
+                                                                 @RequestParam int pageSize,
+                                                                 @RequestParam int pageNo,
+                                                                 @RequestParam String sortBy,
+                                                                 @RequestParam String sort){
+        try {
+            OnskedList services = adminSvc.getServicesOfSearchElement(filterService, searchElement, pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(services, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/checkStateExist")
+    public ResponseEntity<Integer> checkStateExist(@RequestParam String countryCode){
+        try {
+            Integer count = adminSvc.checkStateExist(countryCode);
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/checkAppointmentExists")
+    public ResponseEntity<Integer> checkAppointmentExists(@RequestParam String countryCode,
+                                                          @RequestParam String holidayDt){
+        try {
+            Integer count = adminSvc.checkAppointmentExists(countryCode, holidayDt);
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @PostMapping("/checkState")
+    public ResponseEntity<Integer> checkState(@Valid @RequestBody State state){
+        try {
+            Integer count = adminSvc.checkState(state);
+            return new ResponseEntity<>(count, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getAllStatesBySort")
+    public ResponseEntity<OnskedList> getAllStatesBySort(@RequestParam int pageSize,
+                                                           @RequestParam int pageNo,
+                                                           @RequestParam String sortBy,
+                                                           @RequestParam String sort){
+        try {
+            OnskedList states = adminSvc.getAllStatesBySort(pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(states, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
+        }
+    }
+
+    @GetMapping("/getCountryStates")
+    public ResponseEntity<OnskedList> getCountryStates(@RequestParam String countryCode,
+                                                              @RequestParam int pageSize,
+                                                              @RequestParam int pageNo,
+                                                              @RequestParam String sortBy,
+                                                              @RequestParam String sort){
+        try {
+            OnskedList states = adminSvc.getCountryStates(countryCode, pageSize, pageNo, sortBy, sort);
+            return new ResponseEntity<>(states, HttpStatus.OK);
+        }catch (Exception e){
+            log.debug(e.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.EXPECTATION_FAILED, "Transaction failed");
         }
     }
 }

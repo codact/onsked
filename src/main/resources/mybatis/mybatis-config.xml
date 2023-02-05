@@ -16,8 +16,20 @@
         <typeAlias alias="location" type="com.amazech.onsked.domain.Location"/>
         <typeAlias alias="paymentHistory" type="com.amazech.onsked.domain.PaymentHistory"/>
         <typeAlias alias="client" type="com.amazech.onsked.domain.Client"/>
+        <!-- Admin -->
+        <typeAlias alias="service" type="com.amazech.onsked.domain.Service"/>
+        <typeAlias alias="serviceMaster" type="com.amazech.onsked.domain.ServiceMaster"/>
+        <typeAlias alias="listBusinessCategories" type="com.amazech.onsked.domain.Category"/>
+        <typeAlias alias="holiday" type="com.amazech.onsked.domain.Holiday"/>
+        <typeAlias alias="country" type="com.amazech.onsked.domain.Country"/>
+        <typeAlias alias="state" type="com.amazech.onsked.domain.State"/>
+        <typeAlias alias="pageviewTracker" type="com.amazech.onsked.domain.PageviewTracker"/>
+        <typeAlias alias="business" type="com.amazech.onsked.domain.Business"/>
+        <typeAlias alias="upgradeOptions" type="com.amazech.onsked.domain.UpgradeOptions"/>
+        <typeAlias alias="user" type="com.amazech.onsked.domain.User"/>
     </typeAliases>
     <mappers>
         <mapper resource="mapper/UserMapper.xml"/>
+        <mapper resource="mapper/AdminMapper.xml"/>
     </mappers>
 </configuration>

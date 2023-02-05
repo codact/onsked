@@ -1,0 +1,958 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amazech.onsked.dao.mapper.AdminMapper">
+
+    <resultMap id="listBusinessCategoriesResult" type="listBusinessCategories">
+        <result property="categoryCode" column="category_code"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="details" column="details"/>
+        <result property="resourceTitle" column="resource_title"/>
+        <result property="resourceTitlePlural" column="resource_title_plural"/>
+        <result property="receiverTitle" column="receiver_title"/>
+        <result property="receiverTitlePlural" column="receiver_title_plural"/>
+        <result property="isActive" column="is_active"/>
+    </resultMap>
+
+
+    <resultMap id="countryResult" type="country">
+        <result property="countryCode" column="country_code"/>
+        <result property="countryName" column="country_name"/>
+    </resultMap>
+
+    <resultMap id="stateResult" type="state">
+        <result property="countryCode" column="country_code"/>
+        <result property="stateCode" column="state_code"/>
+        <result property="stateName" column="state_name"/>
+    </resultMap>
+
+    <resultMap id="serviceMasterResult" type="serviceMaster">
+        <result property="serviceCode" column="service_code"/>
+        <result property="serviceName" column="service_name"/>
+        <result property="categoryCode" column="category_code"/>
+        <result property="description" column="description"/>
+        <result property="isActive" column="is_active"/>
+    </resultMap>
+
+    <resultMap id="holidayResult" type="holiday">
+        <result property="countryCode" column="country_code"/>
+        <result property="holidayDt" column="holiday_dt"/>
+        <result property="holidayReason" column="holiday_reason"/>
+        <result property="isActive" column="is_active"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="createdBy" column="created_by"/>
+        <result property="modifiedDt" column="modified_dt"/>
+        <result property="modifiedBy" column="modified_by"/>
+    </resultMap>
+
+    <resultMap id="businessResult" type="business">
+        <result property="bizId" column="biz_id"/>
+        <result property="bizName" column="biz_name"/>
+        <result property="isActive" column="is_active"/>
+        <result property="visitCount" column="visitCount"/>
+    </resultMap>
+
+    <resultMap id="featuredBusinessResult" type="business">
+        <result property="bizId" column="biz_id"/>
+        <result property="bizName" column="biz_name"/>
+        <result property="bizIsActive" column="bizIsActive"/>
+        <result property="featuredBizIsActive" column="featuredBizIsActive"/>
+    </resultMap>
+
+    <resultMap id="featuredBusinessResult1" type="business">
+        <result property="bizId" column="biz_id"/>
+        <result property="bizName" column="biz_name"/>
+        <result property="bizIsActive" column="bizIsActive"/>
+        <result property="featuredBizIsActive" column="featuredBizIsActive"/>
+
+    </resultMap>
+
+    <resultMap id="result" type="user">
+        <result property="userId" column="user_id"/>
+        <result property="email" column="email"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="gender" column="gender"/>
+        <result property="dateOfBirth" column="date_of_birth"/>
+        <result property="addressLine1" column="address_line1"/>
+        <result property="addressLine2" column="address_line2"/>
+        <result property="city" column="city"/>
+        <result property="stateCode" column="state_code"/>
+        <result property="zipCode" column="zip_code"/>
+        <result property="countryCode" column="country_code"/>
+        <result property="timeZoneCode" column="timezone_code"/>
+        <result property="cellPhone" column="cell_phone"/>
+        <result property="homePhone" column="home_phone"/>
+        <result property="workPhone" column="work_phone"/>
+        <result property="workPhoneExt" column="work_phone_ext"/>
+        <result property="isVerified" column="is_verified"/>
+        <result property="verificationDt" column="verification_dt"/>
+        <result property="isActive" column="is_active"/>
+        <result property="lastLoginDt" column="last_login_dt"/>
+        <result property="createdDt" column="created_dt"/>
+        <result property="modifiedDt" column="modified_dt"/>
+        <result property="securityQuestion1" column="security_question1"/>
+        <result property="securityQuestion2" column="security_question2"/>
+        <result property="answer1" column="answer1"/>
+        <result property="answer2" column="answer2"/>
+        <result property="roleCode" column="role_code"/>
+        <result property="levelTitle" column="level_title"/>
+        <result property="periodYears" column="period_years"/>
+        <result property="periodMonths" column="period_months"/>
+        <result property="periodDays" column="period_days"/>
+        <result property="paymentDt" column="payment_dt"/>
+    </resultMap>
+
+    <resultMap id="result1" type="user">
+        <result property="email" column="email"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+    </resultMap>
+
+    <resultMap id="upgradeOptionsResult" type="upgradeOptions">
+        <result property="levelId" column="level_id"/>
+        <result property="levelDesc" column="level_desc"/>
+        <result property="levelTitle" column="level_title"/>
+        <result property="cost" column="cost"/>
+        <result property="periodYears" column="period_years"/>
+        <result property="periodMonths" column="period_months"/>
+        <result property="periodDays" column="period_days"/>
+        <result property="limitResources" column="limit_resources"/>
+        <result property="limitBusinesses" column="limit_businesses"/>
+        <result property="limitLocations" column="limit_locations"/>
+    </resultMap>
+
+    <resultMap id="upgradeOptionsResult1" type="upgradeOptions">
+        <result property="limitResources" column="limit_resources"/>
+        <result property="limitBusinesses" column="limit_businesses"/>
+        <result property="limitLocations" column="limit_locations"/>
+    </resultMap>
+
+    <select id="getLastInsertId" resultType="java.lang.Integer">
+        select last_insert_id() as id;
+    </select>
+
+    <insert id="addBusinessCategory">
+        insert into category(
+        category_code,
+        category_name,
+        resource_title,
+        resource_title_plural,
+        receiver_title,
+        receiver_title_plural,
+        is_active,
+        details)
+        values(
+        null,
+        #categoryName#,
+        #resourceTitle#,
+        #resourceTitlePlural#,
+        #receiverTitle#,
+        #receiverTitlePlural#,
+        #isActive#,
+        #details#)
+        <selectKey resultType="java.lang.String" keyProperty="categoryCode">
+            select last_insert_id() as category_code
+        </selectKey>
+    </insert>
+
+    <insert id="addServiceToCategory">
+        insert into service_master(
+        service_code,
+        service_name,
+        category_code,
+        description,
+        is_active)
+        values(
+        null,
+        #serviceName#,
+        #categoryCode#,
+        #description#,
+        #isActive#)
+    </insert>
+
+    <insert id="insertSubscription">
+        insert into user_upgrade_levels(
+        level_id,
+        level_title,
+        level_desc,
+        limit_appointments,
+        limit_locations,
+        limit_resources,
+        limit_businesses,
+        period_years,
+        period_months,
+        period_days,
+        is_active,
+        cost)
+        values(
+        null,
+        'Increment',
+        'additional',
+        0,
+        #numberOfLocation#,
+        #numberOfResource#,
+        #numberOfBusiness#,
+        0,
+        0,
+        0,
+        'Y',
+        0);
+    </insert>
+
+    <update id="updateBusinessCategory">
+        update category
+        set	category_code = #categoryCode#,
+        category_name = #categoryName#,
+        resource_title=#resourceTitle#,
+        resource_title_plural=#resourceTitlePlural#,
+        receiver_title = #receiverTitle#,
+        receiver_title_plural = #receiverTitlePlural#,
+        is_active = #isActive#,
+        details = #details#
+        where category_code=#categoryCode#
+    </update>
+
+    <select id="getCategoryByCategoryCode" resultMap="listBusinessCategoriesResult">
+        select
+        category_code,
+        category_name,
+        resource_title,
+        resource_title_plural,
+        receiver_title,
+        receiver_title_plural,
+        details,
+        is_active
+        from category
+        where category_code = #categoryCode#;
+    </select>
+
+    <select id="getUpgradeOptionsBySort" resultMap="upgradeOptionsResult">
+        select $sqlRows$
+        level_id,
+        level_title,
+        level_desc,
+        cost,
+        period_years,
+        period_months,
+        period_days,
+        limit_resources,
+        limit_businesses,
+        limit_locations
+        from user_upgrade_levels
+        where is_active = 'Y' and cost=0 order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <update id="enableDisableCategory">
+        update category
+        set is_active = #isActive#
+        where category_code = #categoryCode#;
+    </update>
+
+    <update id="enableDisableHoliday">
+        update holiday
+        set is_active = #isActive#
+        where country_code = #countryCode# and holiday_dt = #holidayDt#;
+    </update>
+
+    <insert id="addCountry">
+        insert into country(
+        country_code,
+        country_name)
+        values(
+        UPPER(#countryCode#),
+        #countryName#)
+    </insert>
+
+    <update id="updateCountry">
+        update country
+        set country_code = UPPER(#countryCode#),
+        country_name = #countryName#
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateClientCountryCode">
+        update client
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateCurrencyCountryCode">
+        update currency
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateHolidayCountryCode">
+        update holiday
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateLocationCountryCode">
+        update location
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateResourceCountryCode">
+        update resource
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateStateCountryCode">
+        update state
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateTimeZoneCountryCode">
+        update timezone
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateUnregisteredUserMasterCountryCode">
+        update unregistered_user_master
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+    <update id="updateUserMasterCountryCode">
+        update user_master
+        set country_code = UPPER(#countryCode#)
+        where country_code = #countryCodePresent#;
+    </update>
+
+
+
+
+    <insert id="addState">
+        insert into state(
+        country_code,
+        state_code,
+        state_name)
+        values(
+        #countryCode#,
+        UPPER(#stateCode#),
+        #stateName#)
+    </insert>
+
+    <update id="updateState">
+        update state
+        set country_code = #countryCode#,
+        state_code = UPPER(#stateCode#),
+        state_name = #stateName#
+        where country_code = #countryCodePresent# and state_code = #stateCodePresent#;
+    </update>
+
+    <insert id="addDefaultHoliday">
+        insert into holiday(
+        country_code,
+        holiday_dt,
+        holiday_reason,
+        is_active,
+        created_dt,
+        created_by,
+        modified_dt,
+        modified_by)
+        values(
+        #countryCode#,
+        #holidayDtAsYYYYMMDD#,
+        #holidayReason#,
+        #isActive#,
+        UTC_TIMESTAMP(),
+        #createdBy#,
+        UTC_TIMESTAMP(),
+        #modifiedBy#)
+    </insert>
+
+    <select id="getServiceByServiceCode" resultMap="serviceMasterResult">
+        select
+        service_code,
+        service_name,
+        category_code,
+        description,
+        is_active
+        from service_master
+        where service_code = #serviceCode#
+    </select>
+
+
+    <update id="updateServiceDetails">
+        update service_master
+        set
+        service_code = #serviceCode#,
+        service_name = #serviceName#,
+        category_code = #categoryCode#,
+        description = #description#,
+        is_active = #isActive#
+        where service_code = #serviceCode#;
+    </update>
+
+    <select id="getMasterServices" resultMap="serviceMasterResult">
+        select
+        service_code,
+        service_name,
+        category_code,
+        description,
+        is_active
+        from service_master
+        where category_code = #categoryCode# and is_active = 'Y'
+    </select>
+
+    <select id="getCategoryByCategoryName" resultMap="listBusinessCategoriesResult">
+        select * from (select
+        category_code,
+        category_name,
+        resource_title,
+        resource_title_plural,
+        receiver_title,
+        receiver_title_plural,
+        details,
+        is_active
+        from category
+        where category_name = #categoryName#)as a GROUP BY category_name;
+    </select>
+
+
+    <select id="getAllCategories" resultMap="listBusinessCategoriesResult">
+        select
+        category_code,
+        category_name,
+        resource_title,
+        resource_title_plural,
+        receiver_title,
+        receiver_title_plural,
+        details,
+        is_active
+        from category;
+    </select>
+
+    <insert id="addService">
+        insert into service_master(
+        service_code,
+        service_name,
+        category_code,
+        description,
+        is_active)
+        values(
+        null,
+        #serviceName#,
+        #categoryCode#,
+        #description#,
+        'Y')
+    </insert>
+
+    <select id="checkService" resultType="java.lang.Integer">
+        select
+        count(*)
+        from service_master where service_name = #serviceName#;
+    </select>
+
+    <select id="getLevelId" resultType="java.lang.Integer">
+        SELECT max(level_id) from user_upgrade_levels ;
+    </select>
+
+    <select id="getExpiryDate" resultType="java.lang.String">
+        select package_expiry_dt from user_payments where payment_id=(select max(payment_id) from user_payments where user_id=#userId#);
+    </select>
+
+    <select id="getUserDetails" resultMap="result1">
+        SELECT email,first_name,last_name FROM user_master where user_id=#userId#;
+    </select>
+
+    <select id="getincrementedLists" resultMap="upgradeOptionsResult1">
+        select limit_businesses,limit_locations,limit_resources from user_upgrade_levels join user_payments on user_payments.level_id=user_upgrade_levels.level_id
+        where user_payments.payment_id=(select max(payment_id) from user_payments where user_id=#userId#) and cost=0;
+    </select>
+
+    <select id="getincrementedListsWhenCostIsNotZero" resultMap="upgradeOptionsResult">
+        select * from user_upgrade_levels join user_payments on user_payments.level_id=user_upgrade_levels.level_id
+        where user_payments.payment_id=(select max(payment_id) from user_payments where user_id=#userId#) and cost!=0;
+    </select>
+
+    <select id="getServiceByCategoryCodeServiceCode" resultMap="serviceMasterResult">
+        select *
+        from service_master where category_code = #categoryCode# and service_code = #serviceCode#;
+    </select>
+
+    <update id="updateService">
+        update service_master
+        set service_code = #serviceCode#,
+        service_name = #serviceName#,
+        category_code = #categoryCode#,
+        description = #description#
+        where category_code = #categoryCodePresent# and service_code = #serviceCodePresent#;
+    </update>
+
+    <delete id="deleteService">
+        delete from service_master
+        where category_code = #categoryCode# and service_code = #serviceCode#;
+    </delete>
+
+    <select id="getAllCountries" resultMap="countryResult">
+        select
+        country_code,
+        country_name
+        from country;
+    </select>
+
+    <select id="getCountryByCountryCode" resultMap="countryResult">
+        select *
+        from country where country_code = #countryCode#;
+    </select>
+
+    <select id="getStateByCountryCodeStateCode" resultMap="stateResult">
+        select *
+        from state where country_code = #countryCode# and state_code = #stateCode#;
+    </select>
+
+
+    <select id="isCategoryActive" resultType="java.lang.String">
+        select
+        is_active
+        from category where category_code = #categoryCode#;
+    </select>
+
+    <select id="isHolidayActive" resultType="java.lang.String">
+        select
+        is_active
+        from holiday where country_code = #countryCode# and holiday_dt = #holidayDt#;
+    </select>
+
+    <select id="checkDefaultHoliday" resultType="java.lang.Integer">
+        select
+        count(*)
+        from holiday where country_code = #countryCode# and holiday_dt = #holidayDt#;
+    </select>
+
+    <select id="checkCountryByCountryName" resultType="java.lang.Integer">
+        select
+        count(*)
+        from country where country_name = #countryName#;
+    </select>
+
+    <select id="checkCountryByCountryCode" resultType="java.lang.Integer">
+        select
+        count(*)
+        from country where country_code = #countryCode#;
+    </select>
+
+    <select id="checkState" resultType="java.lang.Integer">
+        select if(((select count(*) from state where state_name = #stateName# and country_code = #countryCode#) &gt; 0), if(((select count(*) from state where state_code = #stateCode# and country_code = #countryCode#) &gt; 0), 3,2),if(((select count(*) from state where state_code = #stateCode# and country_code=#countryCode#) &gt; 0), 1,0)) as xx;
+    </select>
+
+    <delete id="deleteCountry">
+        delete from country
+        where country_code = #countryCode#;
+    </delete>
+
+    <delete id="deleteState">
+        delete from state
+        where country_code = #countryCode# and state_code = #stateCode#;
+    </delete>
+
+    <select id="getHolidayByDateAndCountry" resultMap="holidayResult">
+        select
+        country_code,
+        date_format(holiday_dt,'%m/%d/%Y') as holiday_dt,
+        holiday_reason,
+        is_active,
+        created_dt,
+        created_by,
+        modified_dt,
+        modified_by
+        from holiday where country_code = #countryCode# and holiday_dt = date_format(#holidayDt#,'%Y-%m-%d');
+    </select>
+
+    <select id="getHolidayDetails" resultMap="holidayResult">
+        select *
+        from holiday where country_code = #countryCode# and holiday_dt = #holidayDt#;
+    </select>
+
+    <update id="updateDefaultHoliday">
+        update holiday
+        set
+        country_code = #countryCode#,
+        holiday_dt = #holidayDt#,
+        holiday_reason = #holidayReason#,
+        modified_dt = UTC_TIMESTAMP(),
+        modified_by = #modifiedBy#
+        where country_code = #countryCodePresent# and holiday_dt = #holidayDtPresent#;
+    </update>
+
+    <select id="getAllStatesBySort" resultMap="stateResult">
+        select $sqlRows$
+        country_code,
+        state_code,
+        state_name
+        from state order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="getCountryStates" resultMap="stateResult">
+        select  $sqlRows$
+        country_code,
+        state_code,
+        state_name
+        from state where country_code = #countryCode# order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="isBusinessActive" resultType="java.lang.String">
+        select
+        is_active
+        from business where biz_id = #bizId#;
+    </select>
+
+    <update id="enableDisableBusiness">
+        update business
+        set is_active = #isActive#
+        where biz_id = #bizId#;
+    </update>
+
+    <select id="getFeaturedBusinesses" resultMap="featuredBusinessResult">
+        select
+        business.biz_id,
+        biz_name,
+        business.is_active as bizIsActive,
+        IFNULL(featured_businesses.is_active,0) as featuredBizIsActive
+        from business left join featured_businesses on featured_businesses.biz_id= business.biz_id where business.is_active = "Y";
+    </select>
+
+    <select id="getCategoriesOfSearchElement" resultMap="listBusinessCategoriesResult">
+        select $sqlRows$
+        category_code,
+        category_name,
+        resource_title,
+        resource_title_plural,
+        receiver_title,
+        receiver_title_plural,
+        details,
+        is_active
+        from category
+        where (category_name like #searchElement# or details like #searchElement#) order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="getServicesOfSearchElement" resultMap="serviceMasterResult">
+        select $sqlRows$
+        service_code,
+        service_name,
+        category_code,
+        description,
+        is_active
+        from service_master
+        where (service_name like #searchElement# or description like #searchElement#) order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="getServicesOfSearchElementAndCategoryCode" resultMap="serviceMasterResult">
+        select $sqlRows$
+        service_code,
+        service_name,
+        category_code,
+        description,
+        is_active
+        from service_master
+        where ((service_name like #searchElement# or description like #searchElement#) and category_code = #categoryCode#) order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="getCountriesOfSearchElement" resultMap="countryResult">
+        select $sqlRows$
+        country_code,
+        country_name
+        from country
+        where (country_name like #searchElement#) order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="getStatesOfSearchElement" resultMap="stateResult">
+        select $sqlRows$
+        country_code,
+        state_code,
+        state_name
+        from state
+        where (state_name like #searchElement#) order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="getStatesOfSearchElementAndCountryCode" resultMap="stateResult">
+        select $sqlRows$
+        country_code,
+        state_code,
+        state_name
+        from state
+        where (state_name like #searchElement#  and country_code = #countryCode#) order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="getHolidaysOfSearchElement" resultMap="holidayResult">
+        select $sqlRows$
+        country_code,
+        holiday_dt,
+        holiday_reason,
+        is_active,
+        created_dt,
+        created_by,
+        modified_dt,
+        modified_by
+        from holiday
+        where (country_code like #searchElement#) and is_active="Y" order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="checkStateIsEditable" resultType="java.lang.Integer">
+        select
+        count(*)
+        from $table$ where state_code = #stateCode# and country_code = #countryCode#;
+    </select>
+
+    <select id="getMostActiveBusinesses" resultMap="businessResult">
+        select * from (select count(*) as visitCount,
+        t1.biz_id,
+        biz_name,
+        t1.is_active
+        from business as t1
+        join pageview_tracker as t2 on t1.biz_id=t2.biz_id where page_name=#pageName# and t1.is_active="Y" group by biz_id
+        limit 5)as t3 order by t3.visitCount desc
+    </select>
+
+    <select id="isFeaturedBusinessActive" resultType="java.lang.String">
+        select
+        is_active
+        from featured_businesses where biz_id = #bizId#;
+    </select>
+
+    <update id="markOrRemoveFeaturedBusiness">
+        update featured_businesses
+        set is_active = #isActive#
+        where biz_id = #bizId#;
+    </update>
+
+    <insert id="addFeaturedBusiness">
+        insert into featured_businesses(
+        biz_id,
+        created_by,
+        created_dt,
+        is_active)
+        values(
+        #bizId#,
+        #createdBy#,
+        UTC_TIMESTAMP(),
+        'Y')
+    </insert>
+
+    <select id="getAllActiveOnskedUsersBySort" resultMap="result">
+        select $sqlRows$
+        user_master.user_id,
+        user_master.email,
+        user_master.first_name,
+        user_master.last_name,
+        user_master.gender,
+        date_format(user_master.date_of_birth,'%m/%d/%Y') as date_of_birth,
+        user_master.address_line1,
+        user_master.address_line2,
+        user_master.city,
+        user_master.state_code,
+        user_master.zip_code,
+        user_master.country_code,
+        user_master.timezone_code,
+        user_master.cell_phone,
+        user_master.home_phone,
+        user_master.work_phone,
+        user_master.work_phone_ext,
+        user_master.is_verified,
+        IF(user_master.is_verified = "Y",now(),user_master.verification_dt) as verification_dt,
+        IF(user_master.is_verified = "N", "unverified user", user_role.role_code )  as role_code,
+        user_master.is_active,
+        user_master.last_login_dt,
+        user_master.created_dt,
+        user_master.modified_dt,
+        user_master.security_question1,
+        user_master.security_question2,
+        user_master.answer1,
+        user_master.answer2,
+        ul1.level_title,
+        ul1.period_years,
+        ul1.period_months,
+        ul1.period_days,
+        t1.payment_dt
+        from user_master inner join user_role on user_master.user_id = user_role.user_id
+        left join (select um.user_id as user_id,
+        max(up.payment_dt) as payment_dt,max(up.payment_id) as payment_id
+        from user_master um inner join user_payments up on up.user_id=um.user_id
+        group by um.user_id) as t1 on t1.user_id= user_master.user_id
+        left join user_payments up2 on t1.payment_id=up2.payment_id
+        left join user_upgrade_levels ul1 on ul1.level_id = up2.level_id
+        where user_master.user_id !=0 and user_role.role_code not in ("SITEADMIN") order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <update id="upgradeUser">
+        update user_role
+        set role_code = "BIZADMIN"
+        where user_id = #userId#
+    </update>
+
+    <update id="updateExpiryDate">
+        update user_payments set package_expiry_dt=#expiryDate# where payment_dt = (select * from (select max(payment_dt) as payment_dt from user_payments where user_id=#userId#) as t);
+    </update>
+
+    <insert id="addPaymentDetails">
+        insert into user_payments(
+        payment_id,
+        user_id,
+        level_id,
+        confirmation_number,
+        payment_mode,
+        gateway_transaction_id,
+        amount,
+        payment_dt,
+        created_dt,
+        package_expiry_dt,
+        additional_details)
+        values(
+        null,
+        #userId#,
+        #levelId#,
+        #confirmationNumber#,
+        #paymentMode#,
+        #gatewayTransactionId#,
+        #amount#,
+        UTC_TIMESTAMP(),
+        UTC_TIMESTAMP(),
+        #packageExpiryDate#,
+        #additionalDetails#);
+    </insert>
+
+    <insert id="insertPaymentDetails">
+        insert into user_payments(
+        payment_id,
+        user_id,
+        level_id,
+        confirmation_number,
+        payment_mode,
+        gateway_transaction_id,
+        amount,
+        payment_dt,
+        created_dt,
+        package_expiry_dt,
+        additional_details)
+        values(
+        null,
+        #userId#,
+        #levelId#,
+        '00000000',
+        4,
+        '00000000',
+        0,
+        UTC_TIMESTAMP(),
+        UTC_TIMESTAMP(),
+        #packageExpiryDate#,
+        '');
+    </insert>
+
+    <select id="getUsersByEmailId" resultMap="result">
+        select $sqlRows$
+        user_master.user_id,
+        user_master.email,
+        user_master.first_name,
+        user_master.last_name,
+        user_master.gender,
+        date_format(user_master.date_of_birth,'%m/%d/%Y') as date_of_birth,
+        user_master.address_line1,
+        user_master.address_line2,
+        user_master.city,
+        user_master.state_code,
+        user_master.zip_code,
+        user_master.country_code,
+        user_master.timezone_code,
+        user_master.cell_phone,
+        user_master.home_phone,
+        user_master.work_phone,
+        user_master.work_phone_ext,
+        user_master.is_verified,
+        IF(user_master.is_verified = "Y",now(),user_master.verification_dt) as verification_dt,
+        IF(user_master.is_verified = "N", "unverified user", user_role.role_code )  as role_code,
+        user_master.is_active,
+        user_master.last_login_dt,
+        user_master.created_dt,
+        user_master.modified_dt,
+        user_master.security_question1,
+        user_master.security_question2,
+        user_master.answer1,
+        user_master.answer2,
+        ul1.level_title,
+        ul1.period_years,
+        ul1.period_months,
+        ul1.period_days,
+        t1.payment_dt
+        from user_master inner join user_role on user_master.user_id = user_role.user_id
+        left  join (select um.user_id as user_id,
+        max(up.payment_dt) as payment_dt
+        from user_master um inner join user_payments up on up.user_id=um.user_id
+        join user_upgrade_levels ul on ul.level_id = up.level_id group by um.user_id) as t1 on t1.user_id= user_master.user_id
+        left  join user_payments up2 on up2.payment_dt=t1.payment_dt
+        left join user_upgrade_levels ul1 on ul1.level_id = up2.level_id
+        where user_master.user_id !=0 and user_role.role_code not in ("SITEADMIN") and email=#searchElement# order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+    <select id="getFeaturedBusinessesBySort" resultMap="featuredBusinessResult1">
+        select $sqlRows$
+        business.biz_id,
+        biz_name,
+        business.is_active as bizIsActive,
+        IFNULL(featured_businesses.is_active,0) as featuredBizIsActive
+        from business left join featured_businesses on featured_businesses.biz_id= business.biz_id
+        where business.is_active = "Y" order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+    <select id="getAllCategoriesBySort" resultMap="listBusinessCategoriesResult">
+        select $sqlRows$
+        category_code,
+        category_name,
+        resource_title,
+        resource_title_plural,
+        receiver_title,
+        receiver_title_plural,
+        details,
+        is_active
+        from category order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo# ;
+    </select>
+    <select id="getFoundRows" resultType="java.lang.Integer">
+        select FOUND_ROWS();
+    </select>
+    <select id="getAllServicesBySort" resultMap="serviceMasterResult">
+        select $sqlRows$
+        service_code,
+        service_name,
+        category_code,
+        description,
+        is_active
+        from service_master order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo# ;
+    </select>
+
+    <select id="getMasterServicesBySort" resultMap="serviceMasterResult">
+        select $sqlRows$
+        service_code,
+        service_name,
+        category_code,
+        description,
+        is_active
+        from service_master
+        where category_code = #categoryCode# and is_active = 'Y' order by $sortBy$ $sort$ limit #pageSize# offset #offPageNo#;
+    </select>
+
+    <select id="isUserActive" resultType="java.lang.String">
+        select is_active from user_master where user_id = #userId#;
+    </select>
+
+    <update id="updateOnskedUsers">
+        update user_master
+        set is_active = #isActive#
+        where user_id = #userId#;
+    </update>
+
+    <select id="checkStateExist" resultType="java.lang.Integer">
+        select count(*) from state where country_code=#country_code#;
+    </select>
+
+    <select id="checkAppointmentExists" resultType="java.lang.Integer">
+        select count(*)
+        from appointment a join location l on a.loc_id=l.loc_id
+        left join timezone t on l.timezone_code = t.timezone_code
+        where SUBSTRING(CONVERT_TZ(a.start_time,'UTC',t.timezone),1,10)=#holidayDt#
+        and l.country_code=#countryCode#;
+    </select>
+</mapper>

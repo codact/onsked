@@ -1,8 +1,11 @@
 package com.amazech.onsked.service.impl;
 
 import com.amazech.onsked.dao.entity.*;
+import com.amazech.onsked.dao.mapper.AdminMapper;
+import com.amazech.onsked.dao.mapper.UserMapper;
 import com.amazech.onsked.dao.repo.*;
 import com.amazech.onsked.domain.*;
+import com.amazech.onsked.exceptions.DataAccessException;
 import com.amazech.onsked.exceptions.GenericBusinessException;
 import com.amazech.onsked.service.AdminSvc;
 import com.amazech.onsked.util.DateTimeUtil;
@@ -38,6 +41,8 @@ public class AdminSvcImpl implements AdminSvc {
     private UserRepository userRepository;
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    AdminMapper adminMapper;
 
     @Override
     public Integer addBusinessCategory(Category category) {
@@ -480,123 +485,147 @@ public class AdminSvcImpl implements AdminSvc {
     }
 
     @Override
-    public List<Business> getFeaturedBusinesses() {
-        return null;
+    public List<Business> getFeaturedBusinesses() throws DataAccessException {
+        log.debug("Before calling debug method getFeaturedBusinesses()");
+        return adminMapper.getFeaturedBusinesses();
     }
 
     @Override
-    public OnskedList getCategoriesOfSearchElement(String searchElement, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getCategoriesOfSearchElement(String searchElement, int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getCategoriesOfSearchElement()");
+        return adminMapper.getCategoriesOfSearchElement(searchElement, pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getCountriesOfSearchElement(String searchElement, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getCountriesOfSearchElement(String searchElement, int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getCountriesOfSearchElement()");
+        return adminMapper.getCountriesOfSearchElement(searchElement, pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getStatesOfSearchElement(String filterState, String searchElement, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getStatesOfSearchElement(String filterState, String searchElement, int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getStatesOfSearchElement()");
+        return adminMapper.getStatesOfSearchElement(filterState, searchElement, pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getHolidaysOfSearchElement(String searchElement, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getHolidaysOfSearchElement(String searchElement, int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getHolidaysOfSearchElement()");
+        return adminMapper.getHolidaysOfSearchElement(searchElement, pageSize, pageNo, sortBy,sort);
     }
 
     @Override
-    public int checkStateIsEditable(String countryCode, String stateCode) {
-        return 0;
+    public int checkStateIsEditable(String countryCode, String stateCode) throws DataAccessException {
+        log.debug("Before calling debug method checkStateIsEditable()");
+        return adminMapper.checkStateIsEditable(countryCode, stateCode);
     }
 
     @Override
-    public void markOrRemoveFeaturedBusiness(Integer bizId, Integer userId) {
-
+    public void markOrRemoveFeaturedBusiness(Integer bizId, Integer userId) throws DataAccessException {
+        log.debug("Before calling debug method markOrRemoveFeaturedBusiness()");
+        adminMapper.markOrRemoveFeaturedBusiness(bizId, userId);
     }
 
     @Override
-    public OnskedList getAllActiveOnskedUsersBySort(int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getAllActiveOnskedUsersBySort(int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getAllActiveOnskedUsersBySort()");
+        return adminMapper.getAllActiveOnskedUsersBySort(pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getUpgradeOptionsBySort(int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getUpgradeOptionsBySort(int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getUpgradeOptionsBySort()");
+        return adminMapper.getUpgradeOptionsBySort(pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public void addPaymentDetails(Payment payment, String requestPath) {
-
+    public void addPaymentDetails(Payment payment, String requestPath) throws DataAccessException {
+        log.debug("Before calling debug method addPaymentDetails()");
+        adminMapper.addPaymentDetails(payment, requestPath);
     }
 
     @Override
-    public void insertSubscription(int userId, int numberOfBusiness, int numberOfLocation, int numberOfResource, String requestPath) {
-
+    public void insertSubscription(int userId, int numberOfBusiness, int numberOfLocation, int numberOfResource, String requestPath) throws DataAccessException {
+        log.debug("Before calling debug method insertSubscription()");
+        adminMapper.insertSubscription(userId, numberOfBusiness, numberOfLocation, numberOfResource, requestPath);
     }
 
     @Override
-    public void updateExpiryDate(String expiryDate, Integer userId, String requestPath) {
-
+    public void updateExpiryDate(String expiryDate, Integer userId, String requestPath) throws DataAccessException {
+        log.debug("Before calling debug method updateExpiryDate()");
+        adminMapper.updateExpiryDate(expiryDate, userId, requestPath);
     }
 
     @Override
-    public String getExpiryDate(Integer userId) {
-        return null;
+    public String getExpiryDate(Integer userId) throws DataAccessException {
+        log.debug("Before calling debug method getExpiryDate()");
+        return adminMapper.getExpiryDate(userId);
     }
 
     @Override
-    public OnskedList getUsersByEmailId(String searchElement, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getUsersByEmailId(String searchElement, int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getUsersByEmailId()");
+        return adminMapper.getUsersByEmailId(searchElement, pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getFeaturedBusinessesBySort(int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getFeaturedBusinessesBySort(int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getFeaturedBusinessesBySort()");
+        return adminMapper.getFeaturedBusinessesBySort(pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getAllCategoriesBySort(int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getAllCategoriesBySort(int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getAllCategoriesBySort()");
+        return adminMapper.getAllCategoriesBySort(pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getAllServicesBySort(int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getAllServicesBySort(int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getAllServicesBySort()");
+        return adminMapper.getAllServicesBySort(pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getMasterServicesBySort(Integer categoryCode, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getMasterServicesBySort(Integer categoryCode, int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getMasterServicesBySort()");
+        return adminMapper.getMasterServicesBySort(categoryCode, pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getServicesOfSearchElement(Integer filterService, String searchElement, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getServicesOfSearchElement(Integer filterService, String searchElement, int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getServicesOfSearchElement()");
+        return adminMapper.getServicesOfSearchElement(filterService, searchElement, pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public Integer checkStateExist(String countryCode) {
-        return null;
+    public Integer checkStateExist(String countryCode) throws DataAccessException {
+        log.debug("Before calling debug method checkStateExist()");
+        return adminMapper.checkStateExist(countryCode);
     }
 
     @Override
     public Integer checkAppointmentExists(String countryCode, String holidayDt) {
-        return null;
+        log.debug("Before calling debug method checkAppointmentExists()");
+        return adminMapper.checkAppointmentExists(countryCode, holidayDt);
     }
 
     @Override
-    public Integer checkState(State state) {
-        return null;
+    public Integer checkState(State state) throws DataAccessException {
+        log.debug("Before calling debug method checkState()");
+        return adminMapper.checkState(state);
     }
 
     @Override
-    public OnskedList getAllStatesBySort(int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getAllStatesBySort(int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getAllStatesBySort()");
+        return adminMapper.getAllStatesBySort(pageSize, pageNo, sortBy, sort);
     }
 
     @Override
-    public OnskedList getCountryStates(String countryCode, int pageSize, int pageNo, String sortBy, String sort) {
-        return null;
+    public OnskedList getCountryStates(String countryCode, int pageSize, int pageNo, String sortBy, String sort) throws DataAccessException {
+        log.debug("Before calling debug method getCountryStates()");
+        return adminMapper.getCountryStates(countryCode, pageSize, pageNo, sortBy, sort);
     }
 
 }
