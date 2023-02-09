@@ -61,7 +61,6 @@ com\amazech\onsked\domain\Client.class
 com\amazech\onsked\domain\GroupPackageOccurence.class
 com\amazech\onsked\dao\entity\Currency.class
 com\amazech\onsked\domain\Promotion.class
-com\amazech\onsked\service\impl\BusinessSvcImpl.class
 com\amazech\onsked\dao\entity\CountryEntity.class
 com\amazech\onsked\dao\entity\CurrencyId.class
 com\amazech\onsked\domain\SMS.class
@@ -90,7 +89,6 @@ com\amazech\onsked\dao\entity\BusinessUser.class
 com\amazech\onsked\domain\GroupPackage.class
 com\amazech\onsked\domain\UserAndApptInfo.class
 com\amazech\onsked\domain\DisplayDateFormat.class
-com\amazech\onsked\dao\mapper\BusinessMapper.class
 com\amazech\onsked\domain\Patient.class
 com\amazech\onsked\domain\CourseMasterWeekday.class
 com\amazech\onsked\domain\ResourceRoleType.class
@@ -142,7 +140,6 @@ com\amazech\onsked\domain\TimeZones.class
 com\amazech\onsked\domain\ProductIssue.class
 com\amazech\onsked\domain\Location.class
 com\amazech\onsked\domain\ProductModel.class
-com\amazech\onsked\service\BusinessSvc.class
 com\amazech\onsked\domain\TechnicianFormComments.class
 com\amazech\onsked\dao\entity\CategoryEntity.class
 com\amazech\onsked\service\UserSvc.class
