@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.amazech.onsked.dao.mapper.PageviewTrackerMapper">
+    <resultMap id="pageviewTrackerResult" type="pageviewTracker">
+        <result property="pageName" column="page_name"/>
+        <result property="userId" column="user_id"/>
+        <result property="visitedOn" column="visited_on"/>
+        <result property="bizId" column="biz_id"/>
+    </resultMap>
+
+    <resultMap id="pagesVisitedOfAllBusiness" type="pageviewTracker">
+        <result property="bizId" column="biz_id"/>
+        <result property="bizName" column="biz_name"/>
+        <result property="count" column="count"/>
+    </resultMap>
+
+    <select id="getPageviewCountOfBusiness" resultType="java.lang.Integer">
+        select count(*)
+        from pageview_tracker where page_name = #pageName# and biz_id = #bizId# and visited_on between DATE(now())-7 and now();
+    </select>
+
+    <select id="getPageviewCountOfAllBusiness" resultMap="pagesVisitedOfAllBusiness">
+        select count(*) as count,
+        t1.biz_id,
+        biz_name
+        from pageview_tracker as t1
+        join business as t2 on t1.biz_id=t2.biz_id inner join business_user on business_user.biz_id=t1.biz_id
+        where business_user.user_id=#userId# and page_name=#pageName#
+        and t1.visited_on between DATE(now())-7 and now() group by t1.biz_id;
+    </select>
+
+    <insert id="addPageviewCount">
+        insert into pageview_tracker(
+        page_name,
+        user_id,
+        visited_on,
+        biz_id)
+        values(
+        #pageName#,
+        #userId#,
+        now(),
+        #bizId#);
+    </insert>
+
+</mapper>

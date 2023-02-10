@@ -3,9 +3,10 @@ package com.amazech.onsked.dao.mapper;
 import com.amazech.onsked.domain.*;
 import com.amazech.onsked.exceptions.DataAccessException;
 import com.amazech.onsked.util.OnskedList;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
-
+@Mapper
 public interface AdminMapper {
 
     // Add the Business Categories to database
